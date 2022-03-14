@@ -3,13 +3,10 @@ import './App.css';
 import SearchBar from './SearchBar';
 import Map from "./Map"
 import "@material-tailwind/react/tailwind.css";
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet'
 function App() {
 
-
-  
-
   const [input, setinput] = useState("");
-  
 
   let appJsProps = {
     color: input

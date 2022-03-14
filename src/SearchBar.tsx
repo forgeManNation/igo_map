@@ -16,7 +16,7 @@ const SearchBar = () => {
     return false
   })
   return (
-    <div className= "bg-gray-200 h-screen" >
+    <div className= "bg-gray-800 h-screen overflow-scroll" style={{scrollbarColor: "#999 #333"}} >
         <div >SearchBar</div>
         <div className="flex justify-center ">
               <input type="search"
