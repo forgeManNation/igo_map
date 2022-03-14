@@ -7,8 +7,11 @@ const Map = () => {
 
   // let d :any = countries;
   let b :any = countries.features[5];
+
+
   console.log(b, "BViedmaCky");
-  
+  //[51.505, -0.09]
+  console.log(b.geometry.coordinates[0], "FUUUUUUUUUUUUUUUCK YOU");
   
   return (
     <MapContainer style = {{width: "200vh", height: "100vh"}}center={[49.505, 25.09]} zoom={5}>
@@ -17,12 +20,12 @@ const Map = () => {
             url='https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=3f19809ebd064b10a80b4ea7d2035c35'
         />
         
-        <GeoJSON data={countries} />
-        {/* <Marker position={[51.505, -0.09]}>
+        <GeoJSON data={b.geometry} />
+        <Marker position={b.geometry.coordinates[0][0]}>
             <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            {b.properties.ADMIN}
             </Popup>
-        </Marker> */}
+        </Marker>
     </MapContainer>
   )
 }

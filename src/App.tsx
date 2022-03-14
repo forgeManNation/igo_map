@@ -14,8 +14,7 @@ function App() {
 
   function changeInput(e: React.ChangeEvent<HTMLInputElement>) {
     let newInput : string = e.target.value;
-
-    setinput(newInput)
+    setinput(newInput);
     
   }
 
