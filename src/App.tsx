@@ -1,31 +1,22 @@
 import React, {useState} from 'react';
 import './App.css';
-import SearchBar from './SearchBar';
-import Map from "./Map"
+import SearchBar from './components/searchbar/SearchBar';
+import Map from "./components/map/Map"
 import "@material-tailwind/react/tailwind.css";
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet'
+
 function App() {
 
-  const [input, setinput] = useState("");
-
-  let appJsProps = {
-    color: input
+  const [curentOrg, setcurentOrg] = useState("")
+  function changeCurrentOrg(org: string) {
+   setcurentOrg(org)
   }
-
-  function changeInput(e: React.ChangeEvent<HTMLInputElement>) {
-    let newInput : string = e.target.value;
-    setinput(newInput);
-    
-  }
-
 
   return (
     <div className="App ">
       <div className="flex gap-4 ">
-        <SearchBar ></SearchBar> 
-        <Map></Map>
+        <SearchBar changeCurrentOrg={changeCurrentOrg}></SearchBar> 
+        <Map organization={curentOrg}></Map>
       </div>
-      
     </div>
   );
 }
