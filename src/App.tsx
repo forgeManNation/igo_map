@@ -12,6 +12,10 @@ function App() {
    setcurentOrg(org)
   }
 
+  console.log("just a small test");
+  
+
+
   return (
     <div className="App ">
       
