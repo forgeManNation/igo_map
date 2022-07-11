@@ -59,7 +59,7 @@ const Map = (props : mapProps) => {
 
   return (
     <>
-    <MapContainer style = {{width: "200vh", height: "100vh"}} center={[49.505, 25.09]} zoom={5}>
+    <MapContainer style = {{width: "200vh", height: "100vh", zIndex: 5}} center={[49.505, 25.09]} zoom={5}>
         <TileLayer
             attribution= {`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
             url='https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=3f19809ebd064b10a80b4ea7d2035c35'

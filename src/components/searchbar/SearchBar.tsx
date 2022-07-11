@@ -3,6 +3,7 @@ import worldCountriesInformation from "../../data/world_countries_information.js
 import WikiPicture from "./wikipicture/WikiPicture"
 
 
+
 interface searchBarProps {
   changeCurrentOrg: (org: string) => void
 }
@@ -48,6 +49,7 @@ let organisationsArray = [];
   return (
     <div className= "bg-gray-800 h-screen overflow-scroll" style={{scrollbarColor: "#999 #333"}} >
         <div >SearchBar</div>
+        
         <div className="flex justify-center ">
               <input type="search"
                className="form-control flex-auto min-w-0 block 

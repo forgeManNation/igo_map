@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from './components/searchbar/SearchBar';
 import Map from "./components/map/Map"
 import "@material-tailwind/react/tailwind.css";
+import IntroductionModal from './components/IntroductionModal';
 
 function App() {
 
@@ -13,9 +14,13 @@ function App() {
 
   return (
     <div className="App ">
+      
       <div className="flex gap-4 ">
         <SearchBar changeCurrentOrg={changeCurrentOrg}></SearchBar> 
         <Map organization={curentOrg}></Map>
+        
+      <IntroductionModal></IntroductionModal>
+      
       </div>
     </div>
   );
