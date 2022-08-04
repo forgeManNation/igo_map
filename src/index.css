@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body, html, .App{
+    background-color: rgb(31 41 55);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* handling of scrollbar for chrome */
+::-webkit-scrollbar {
+    background: rgb(31 41 55);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #999;
+    
+}
+
+::-webkit-scrollbar-corner {
+    background: #333;
+}
