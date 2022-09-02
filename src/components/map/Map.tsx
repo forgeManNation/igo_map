@@ -1,7 +1,6 @@
 import { Feature, FeatureCollection, Geometry, GeoJsonProperties} from 'geojson';
-
+import Control from 'react-leaflet-custom-control'
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet'
-
 import {useEffect, createRef, useState} from 'react'
 
 //leaflet coordinates for all states in the world
@@ -16,6 +15,13 @@ import organizations from "../../data/IGOs.json"
 const Map = (props : mapProps) => {
 
 
+  const [mapHovered, setMapHovered] = useState(false)
+
+  const mapIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+  </svg>
+
+
 
 
   let organizationMembersArray = organizations[props.currentOrganization  as keyof typeof organizations];
@@ -24,10 +30,10 @@ const Map = (props : mapProps) => {
       style:  {
         "color": "rgb(30 58 138)",
         "weight": 5,
-        "opacity": 0.5
+        "opacity": 0.6
     }}
 
-    const membersWithoutStatus = {...world_countries_featureCollection}.features
+    const membersWithoutStatus : Feature[] = {...world_countries_featureCollection}.features
     //filter if the country of feature is in the IGOs list of members
     .filter(feature => organizationMembersArray.organizations
       //filter every feature which name is in the organisationsArray
@@ -43,7 +49,6 @@ const Map = (props : mapProps) => {
     }}
 
 
-      
 
      const membersWithStatus: Feature[] =  {...world_countries_featureCollection}.features
     //filter if the country of feature is in the IGOs list of members
@@ -63,27 +68,22 @@ const Map = (props : mapProps) => {
     }) 
 
 
-
-    // const [membersWithStatus, setmembersWithStatus] = useState<Feature[]>(membersWithStatusFirst)
-
- 
-  console.warn(membersWithStatus, membersWithoutStatus, ":))))))")
+    console.warn("WHATTTTTTTTTTTTTTTTTTTTTTTT");
+    
 
   return (
-    <>
-     <MapContainer  style = {{width: "100%", height: "80vh", zIndex: 5}} center={[49.505, 25.09]} zoom={5}>
-  <TileLayer
-      //this commented tile layer can be used for additional color theme
-      // attribution= {`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
-      //url='https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=3f19809ebd064b10a80b4ea7d2035c35'
-      url ='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
-  />
+    <div onMouseEnter = {() => {setMapHovered(true)}} onMouseLeave = {() => {setMapHovered(false)}}>
+     <MapContainer   style = {{width: "100%", height: "80vh", zIndex: 5}} center={[49.505, 25.09]} zoom={5}>
+      <TileLayer
+          //this commented tile layer can be used for additional color theme
+          // attribution= {`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
+          //url='https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=3f19809ebd064b10a80b4ea7d2035c35'
+          url ='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+      />
 
 
   {
     membersWithoutStatus.map((e, index) => {
-      console.log("Everbody wants to rule the world without status", membersWithoutStatus);
-
 
       return <GeoJSON  key = {'membersWithoutStatus' + index + Math.random()} {...membersWithoutStatusStyle} data = {e} >
         <Popup>
@@ -102,9 +102,24 @@ const Map = (props : mapProps) => {
         </Popup>
       </GeoJSON>
     })
-  }        
+  }
+{/* onClick={() => setOpen(!open)} */}
+{/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">  */}
+    {/* the triggering icon */}
+  <Control prepend position='topright'>
+
+    {
+    mapHovered ?
+    <div  className=' m-2 w-fit p-4 h-fit bg-blue-400 bg-opacity-80  hover:cursor-pointer hover:bg-opacity-100 rounded-full'>{mapIcon}</div> 
+    :
+    <></>
+    }
+  </Control>
+
+
+
 </MapContainer>  
-    </>
+    </div>
   )
 }
 

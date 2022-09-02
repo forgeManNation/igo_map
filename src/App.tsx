@@ -3,7 +3,7 @@ import './App.css';
 import SearchBar from './components/searchbar/SearchBar';
 import Map from "./components/map/Map";
 import "@material-tailwind/react/tailwind.css";
-import IntroductionModal from './components/IntroductionModal';
+import IntroductionModal from './components/modals/IntroductionModal';
 import OrganizationInfo from "./components/organizationinfo/OrganizationInfo";
 import EditModal from './components/modals/EditModal';
 import { InformationCircleIcon} from '@heroicons/react/outline'
