@@ -58,7 +58,7 @@ const cancelButtonRef = useRef(null)
                     the data were scraped from <a href='#www.ciaworldfactbook.com' target="_blank" className=' font-semibold text-slate-700'>The World Factbook</a> in the year 2020 and 
                     may be obsolete or incomplete, if that is the case you can help us update these data by filling form in edit button
                     <hr className='my-4' />
-                    <span className='text-gray-500'>created by <a href = "myPortfolio.com">Radek Starý</a></span>
+                    <span className='text-gray-500'>created by <a className='underline' href = "myPortfolio.com">Radek Starý</a></span>
                     </p>
                     
             </div>
