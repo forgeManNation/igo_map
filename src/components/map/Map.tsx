@@ -2,6 +2,7 @@ import { Feature, FeatureCollection, Geometry, GeoJsonProperties} from 'geojson'
 import Control from 'react-leaflet-custom-control'
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet'
 import {useEffect, createRef, useState} from 'react'
+import MapSettings from "./MapSettings"
 
 //leaflet coordinates for all states in the world
 import world_countries_featureCollection  from '../../data/world_countries_featureCollection.json'
@@ -16,10 +17,18 @@ const Map = (props : mapProps) => {
 
 
   const [mapHovered, setMapHovered] = useState(false)
+  const [mapSettingsOpen, setmapSettingsOpen] = useState(false)
 
-  const mapIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
-  </svg>
+
+  const [themes, setthemes] = useState([
+    {name: "wau", color: "red", url: "www.wau.com", selected: false, memberCountriesColor: "rgb(30 58 138)", memberCountriesWithStatusColor: "rgb(30 58 138)"},
+    {name: "dark theme", color: "gree", url: "www.wau.com", selected: false, memberCountriesColor: "rgb(30 58 138)", memberCountriesWithStatusColor: "rgb(30 58 138)"},
+    {name: "cool", color: "blue", url: "www.wau.com", selected: false, memberCountriesColor: "rgb(30 58 138)", memberCountriesWithStatusColor: "rgb(30 58 138)"},
+    {name: "dark blue theme", color: "blue", url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'", selected: true, memberCountriesColor: "rgb(30 58 138)", memberCountriesWithStatusColor: "rgb(30 58 138)"},
+  ])
+  
+ 
+
 
 
 
@@ -103,17 +112,12 @@ const Map = (props : mapProps) => {
       </GeoJSON>
     })
   }
-{/* onClick={() => setOpen(!open)} */}
-{/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">  */}
+
     {/* the triggering icon */}
   <Control prepend position='topright'>
 
-    {
-    mapHovered ?
-    <div  className=' m-2 w-fit p-4 h-fit bg-blue-400 bg-opacity-80  hover:cursor-pointer hover:bg-opacity-100 rounded-full'>{mapIcon}</div> 
-    :
-    <></>
-    }
+    {mapHovered ? <MapSettings themes={themes} ></MapSettings> : <></>}
+   
   </Control>
 
 
