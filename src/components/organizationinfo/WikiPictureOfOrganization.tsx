@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 interface wikiPictureInterface {
   currentOrganizationWikiPageName: string
 }
-
+//gets Picture from wikipedia if there is one
 const WikiPicture = (props : wikiPictureInterface) => {
 
   useEffect(() => {
@@ -17,8 +17,10 @@ const WikiPicture = (props : wikiPictureInterface) => {
    + props.currentOrganizationWikiPageName)
   .then(response => response.json())
   .then(data => {
+  
+    //getting first an only key of wikipedia because of structure 
     let key = Object.keys(data.query.pages)[0]
-   
+  
     if(data.query.pages[key].original && data.query.pages[key].original.source){ 
       setimageUrl(data.query.pages[key].original.source)
     }

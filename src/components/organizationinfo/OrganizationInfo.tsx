@@ -1,7 +1,6 @@
 import React from 'react'
 import MemebersDataFetchedFromWikipedia from "./MemebersDataFetchedFromWikipedia"
 import MembersDataFromJson from "./MembersDataFromJson"
-import worldCountriesInformation from "../../data/world_countries_information.json"
 import organizations from "../../data/IGOs.json"
 
 interface organizationInfoProps {

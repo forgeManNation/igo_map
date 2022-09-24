@@ -1,7 +1,7 @@
-import { Feature, FeatureCollection, Geometry, GeoJsonProperties} from 'geojson';
+import { Feature} from 'geojson';
 import Control from 'react-leaflet-custom-control'
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet'
-import {useEffect, createRef, useState} from 'react'
+import { MapContainer, TileLayer, Popup, GeoJSON } from 'react-leaflet'
+import {useState} from 'react'
 import MapSettings from "./MapSettings"
 
 //leaflet coordinates for all states in the world
@@ -10,34 +10,49 @@ import world_countries_featureCollection  from '../../data/world_countries_featu
 //object of inter governmental organisations (IGOs), each organisation is an array in the structure [ state, status in IGO]  
 import organizations from "../../data/IGOs.json"
 
-  interface mapProps {
-    currentOrganization: string;
-  }
-const Map = (props : mapProps) => {
+interface MapTheme {
+  name: string,
+  url: string,
+  selected: boolean,
+  memberCountriesColor: string,
+  memberCountriesWithStatusColor: string
+}
 
+  interface mapProps {
+    currentOrganization: string
+  }
+const Map = ({currentOrganization } : mapProps) => {
 
   const [mapHovered, setMapHovered] = useState(false)
-  const [mapSettingsOpen, setmapSettingsOpen] = useState(false)
-
 
   const [themes, setthemes] = useState([
-    {name: "wau", color: "red", url: "www.wau.com", selected: false, memberCountriesColor: "rgb(30 58 138)", memberCountriesWithStatusColor: "rgb(30 58 138)"},
-    {name: "dark theme", color: "gree", url: "www.wau.com", selected: false, memberCountriesColor: "rgb(30 58 138)", memberCountriesWithStatusColor: "rgb(30 58 138)"},
-    {name: "cool", color: "blue", url: "www.wau.com", selected: false, memberCountriesColor: "rgb(30 58 138)", memberCountriesWithStatusColor: "rgb(30 58 138)"},
-    {name: "dark blue theme", color: "blue", url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'", selected: true, memberCountriesColor: "rgb(30 58 138)", memberCountriesWithStatusColor: "rgb(30 58 138)"},
+    {name: "railway theme", url: 'https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=3f19809ebd064b10a80b4ea7d2035c35',
+     selected: false, memberCountriesColor: "red", memberCountriesWithStatusColor: "purple",
+      },
+    {name: "dark blue theme", url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png", selected: true, memberCountriesColor: "rgb(30 58 138)", 
+    memberCountriesWithStatusColor: "rgb(30 58 138)",
+ },
   ])
-  
- 
+
+  function changeTheme(index: number) {
+    let themeCopy = themes;
+    themeCopy = themeCopy.map((theme : MapTheme) =>{ 
+    theme.selected = false
+      return theme
+  })
+  themes[index].selected = true
+  setthemes(themeCopy)
+  }
 
 
+  //find selected theme by finding the one where selelcted property is true
+  const selectedTheme = themes[(themes.findIndex((theme: MapTheme) => theme.selected === true))]
 
-
-
-  let organizationMembersArray = organizations[props.currentOrganization  as keyof typeof organizations];
+  let organizationMembersArray = organizations[currentOrganization  as keyof typeof organizations];
 
     const membersWithoutStatusStyle = {
       style:  {
-        "color": "rgb(30 58 138)",
+        "color": selectedTheme.memberCountriesColor,
         "weight": 5,
         "opacity": 0.6
     }}
@@ -50,14 +65,13 @@ const Map = (props : mapProps) => {
     ) 
     .map(feature => feature as Feature)
 
+
     const membersWithStatusStyle = {
     style:  {
-      "color":  "rgb(30 58 138)",
+      "color":  selectedTheme.memberCountriesWithStatusColor,
       "weight": 5,
       "opacity": 0.15
     }}
-
-
 
      const membersWithStatus: Feature[] =  {...world_countries_featureCollection}.features
     //filter if the country of feature is in the IGOs list of members
@@ -72,29 +86,18 @@ const Map = (props : mapProps) => {
           feature = Object.assign(feature, {properties: featuresPropertiestWithStatus});
         }
       })
-    return feature as Feature  
-    
+    return feature as Feature   
     }) 
-
-
-    console.warn("WHATTTTTTTTTTTTTTTTTTTTTTTT");
-    
+ 
 
   return (
     <div onMouseEnter = {() => {setMapHovered(true)}} onMouseLeave = {() => {setMapHovered(false)}}>
-     <MapContainer   style = {{width: "100%", height: "80vh", zIndex: 5}} center={[49.505, 25.09]} zoom={5}>
-      <TileLayer
-          //this commented tile layer can be used for additional color theme
-          // attribution= {`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
-          //url='https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=3f19809ebd064b10a80b4ea7d2035c35'
-          url ='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
-      />
-
+     <MapContainer  key={currentOrganization + selectedTheme.name} style = {{width: "100%", height: "80vh", zIndex: 5}} center={[49.505, 25.09]} zoom={5}>
+      <TileLayer  url ={selectedTheme.url}/>
 
   {
     membersWithoutStatus.map((e, index) => {
-
-      return <GeoJSON  key = {'membersWithoutStatus' + index + Math.random()} {...membersWithoutStatusStyle} data = {e} >
+      return <GeoJSON  key = {'membersWithoutStatus' + currentOrganization} {...membersWithoutStatusStyle} data = {e} >
         <Popup>
         {e.properties ? ` ${e.properties.sovereignt} \n - full member` : "data of this country could not be loaded"}
         </Popup>
@@ -102,26 +105,18 @@ const Map = (props : mapProps) => {
     })
   }
   {
-    membersWithStatus.map((e, index) => {
-      console.log("Everbody wants to rule the world with the freaking status", membersWithoutStatus);
-      
-      return <GeoJSON key = {'membersWithStatus' + index + Math.random()} {...membersWithStatusStyle}  data = {e}>
+
+    membersWithStatus.map((e, index) =>  <GeoJSON key = {'membersWithStatus' + currentOrganization} {...membersWithStatusStyle}  data = {e}>
         <Popup>
           {e.properties ? `${e.properties.sovereignt} \n has ${e.properties.status} status in the organisation ` : "data of this country could not be loaded"}
         </Popup>
       </GeoJSON>
-    })
+    )
   }
-
     {/* the triggering icon */}
-  <Control prepend position='topright'>
-
-    {mapHovered ? <MapSettings themes={themes} ></MapSettings> : <></>}
-   
+  <Control  prepend position='topright'>
+    {mapHovered ? <MapSettings  changeTheme={changeTheme} themes={themes} ></MapSettings> : <></>}
   </Control>
-
-
-
 </MapContainer>  
     </div>
   )
