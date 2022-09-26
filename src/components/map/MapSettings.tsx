@@ -32,7 +32,7 @@ const MapSettings = ({themes, changeTheme} : Props) => {
  
 
     return (
-    <Popover  className="relative  mr-6 mt-2 ">
+    <Popover  className=" ">
       <Popover.Button><div  onClick={() => {setmapSettingsOpen(!mapSettingsOpen)}} className='   p-3 h-fit bg-blue-400 bg-opacity-50  hover:cursor-pointer hover:bg-opacity-100 rounded-full'>{mapIcon}</div></Popover.Button>
 
       <Popover.Panel  className="-translate-x-1/3 border-slate-600 border-2 rounded absolute  overflow-y-auto overflow-x-visible   z-50 bg-slate-700">
