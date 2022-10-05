@@ -3,12 +3,15 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
+import 'animate.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './index.scss';
+
+
 
 const container = document.getElementById('root');
 const root = createRoot(container);
-
 root.render(
   <React.StrictMode>
     <Provider store={store}>

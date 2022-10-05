@@ -1,8 +1,23 @@
 import { createSlice, current} from "@reduxjs/toolkit";
+import { doc, getDoc, db } from "../../firebase";
 
+
+const docRef = doc(db, "cities", "SF");
+
+let initiall;
+const docSnap = getDoc(docRef).then(doc =>{
+    console.log(doc, 'log me in the doc');
+});
+
+
+console.log(docSnap, "docSnap");
 
 
 const initialState = {
+
+
+
+
     tableHeadData: [
         {
             name: "first hypotesis",
@@ -122,15 +137,11 @@ export const tableSlice = createSlice({
     },
     deleteSpecifiedHypothesis: (state, props) => {
         state.tableBodyData.map(bodyRow => {
-        console.log(current(bodyRow), "paper");
         bodyRow.inputCells.splice(props.payload.index, 1)
-        console.log(current(bodyRow), "planes");
          return bodyRow.inputCells
         })
 
-        console.log(current(state.tableHeadData));
         state.tableHeadData.splice(props.payload.index, 1)
-        console.log(current(state.tableHeadData));
     },
     deleteLastHypothesis: (state) => {
         state.tableBodyData.map(bodyRow => {
@@ -141,34 +152,22 @@ export const tableSlice = createSlice({
     },
     editHypothesis: (state, props) => {
 
-
-        console.log("how many times do i happen? :)");
-
         state.tableHeadData.splice(props.payload.index, 1, {
             name: props.payload.name,
             information: props.payload.information,
             probabilityNumber: 0,
         })
         
-
-        // state.tableHeadData.push({
-        //     name: props.payload.name,
-        //     information: props.payload.information,
-        //     probabilityNumber: 0,
-        // })
-
-
-
-        console.log(state.tableHeadData[props.payload.index], "WHAT");
-        console.log(current(state.tableHeadData), "THE FUCK");
-
+    },
+    deleteSpecifiedEvidence: (state, props) => {
+        state.tableBodyData.splice(props.payload.index, 1)
     }
     }
 }
 
 )
 
-export const { changeCompatibility, addEvidence, deleteLastEvidence, editEvidence, deleteSpecifiedHypothesis, deleteLastHypothesis, addHypothesis, editHypothesis } = tableSlice.actions;
+export const { changeCompatibility, addEvidence, deleteLastEvidence, deleteSpecifiedEvidence, editEvidence, deleteSpecifiedHypothesis, deleteLastHypothesis, addHypothesis, editHypothesis } = tableSlice.actions;
 
 export const selectTableHeadData = (state) => state.table.tableHeadData;
 

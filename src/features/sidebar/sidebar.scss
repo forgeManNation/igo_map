@@ -1,0 +1,6 @@
+@use "../../main.scss" as main;
+
+.main{
+    background-color: main.$bg-color;
+    color: main.$shade-color!important;
+}

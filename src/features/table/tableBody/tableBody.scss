@@ -1,0 +1,55 @@
+@use "../../../main.scss" as main;
+
+.nameCell{
+    width: 120%;
+    margin-left: 10%;
+    position: relative;
+
+}
+
+tr{
+
+    td{
+        text-align: center; 
+        vertical-align: middle;
+    }
+
+
+    .iconsWrapper{
+        
+        background: rgba($color: #F3F0F0, $alpha: 0) ;
+        position: absolute;
+        left: 3vh;
+    
+
+    .editEvidenceIcon{
+        visibility: hidden;
+    }
+    }
+
+    &:hover{
+        .iconsWrapper{
+            background: rgba($color: #F3F0F0, $alpha: 1.0) ;
+            position: absolute;
+            left: 3vh;        
+
+        .editEvidenceIcon{
+            visibility: visible;
+        }
+        }
+    }
+
+}
+
+.inputCell{
+
+    .editIcon{
+        color: main.$base-color;
+        display: none;
+    }
+    &:hover{
+        .editIcon{
+            display: inline;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+GET http://localhost:3000/users
+
+###
+
+GET http://localhost:3000/subscribers/63049b25616d61c3a5bd8598
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username": "whaaaaaat  amazing",
+    "profilePictureUrl": "Web dev simplified",
+    "analysis": ["effef", "wfe ", "wdffwf"]
+}
+
+
+###
+
+DELETE https://localhost:3000/subscribers/63049b25616d61c3a5bd8598
