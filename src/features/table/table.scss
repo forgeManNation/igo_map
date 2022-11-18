@@ -1,31 +1,35 @@
+@use "../../main.scss" as main;
 
-
-@use "../../main.scss"  as main;
- 
 // //table colors
-// $base-color: #02307E; 
+// $base-color: #02307E;
 // $bg-color: #f3f0f0;
 // $shade-color: #010B2E;
 
-
-table{
-    background-color: main.$bg-color;
+table {
+  background-color: main.$bg-color;
 }
 
+.table-alternating-button {
+  margin: 0.5vh 2vh 0.5vh 2vh;
 
-.table-alternating-button{
-
-    margin: 0.5vh  2vh 0.5vh 2vh;
-
-    .table-alternating-icon{
-        color: main.$base-color;
-        opacity: 0.88;
-        font-size: xx-large;
-        // margin: 3vh;
-    }
-
-}
-p, h1, h2, h3, h4, h5, h6, button, th, td, span{
+  .table-alternating-icon {
     color: main.$base-color;
-    border-color: main.$shade-color;
+    opacity: 0.88;
+    font-size: xx-large;
+    // margin: 3vh;
+  }
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+th,
+td,
+span {
+  color: main.$base-color;
+  border-color: main.$shade-color;
 }

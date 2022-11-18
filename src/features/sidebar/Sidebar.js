@@ -1,23 +1,23 @@
 import React from "react";
 import "./sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../authentication/userSlice";
+import { logOut, selectUser } from "./userSlice";
 import { auth } from "../../firebase";
-import { selectUser } from "../authentication/userSlice";
 import Addtask from "../../SaveTask";
 
-const Sidebar = () => {
-  const user = useSelector(selectUser);
-
+const Sidebar = ({ activeAnalysisIndex }) => {
   const dispatch = useDispatch();
+  const userInfo = useSelector(selectUser);
+
+  //these data shall than be pulled from redux tableSlice
+  const analysises = ["wauuu", "owauuu", "ojojoj"];
 
   function signOut() {
     console.log(" I AM CALLING THE SIGNOUT");
-    dispatch(logout());
-    auth.signOut();
+    auth.signOut().then(() => {
+      dispatch(logOut());
+    });
   }
-
-  console.log("log me the user :)", user);
 
   return (
     <div
@@ -33,40 +33,20 @@ const Sidebar = () => {
       </a>
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="#" className="nav-link active" aria-current="page">
-            <svg class="bi me-2" width="16" height="16"></svg>
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <svg class="bi me-2" width="16" height="16"></svg>
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <svg class="bi me-2" width="16" height="16"></svg>
-            Orders
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <svg class="bi me-2" width="16" height="16"></svg>
-            Products
-          </a>
-        </li>
-        <li>
-          <a href="#" className="nav-link text-dark">
-            <svg class="bi me-2" width="16" height="16"></svg>
-            Customers
-          </a>
-        </li>
-        <li>
-          <button>add project</button>
-          <Addtask></Addtask>
-        </li>
+        {analysises.map((analysis, index) => (
+          <li class="nav-item">
+            <a
+              href="#"
+              className={`nav-link ${
+                activeAnalysisIndex === index ? "active" : "text-dark"
+              }`}
+              aria-current="page"
+            >
+              <svg class="bi me-2" width="16" height="16"></svg>
+              {analysis}
+            </a>
+          </li>
+        ))}
       </ul>
 
       <span>this is where the data should be stored</span>
@@ -81,13 +61,13 @@ const Sidebar = () => {
           aria-expanded="false"
         >
           <img
-            src="https://github.com/mdo.png"
-            alt=""
+            src={userInfo.userPic}
+            alt="user"
             class="rounded-circle me-2"
             width="32"
             height="32"
           />
-          <strong>{user.displayName}</strong>
+          <strong>{userInfo.user.displayName || userInfo.user.email}</strong>
         </a>
         <ul
           class="dropdown-menu dropdown-menu-dark text-small shadow"

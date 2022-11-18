@@ -1,47 +1,67 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./app.scss";
 import Table from "./features/table/Table";
 import Sidebar from "./features/sidebar/Sidebar.js";
-import { useDispatch, useSelector } from "react-redux";
-import { login, logout, selectUser } from "./features/authentication/userSlice";
-import { auth, onAuthStateChanged } from "./firebase";
+import { auth, onAuthStateChanged, setDoc, doc, db } from "./firebase";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logIn, logOut } from "./features/sidebar/userSlice";
+import {
+  selectTableBodyData,
+  selectTableHeadData,
+} from "./features/table/tableSlice";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
+import Index from "./features/Index";
+
 function App() {
-  const user = useSelector(selectUser);
+  const [user, setuser] = useState(null);
   const dispatch = useDispatch();
+  onAuthStateChanged(auth, (logged_user) => {
+    if (auth) {
+      if (user !== logged_user) {
+        setuser(logged_user);
+        console.log(logged_user, "LOGGED USER :)");
 
-  //// TRY: it is not needed, is it?
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (userAuth) => {
-  //     if (userAuth) {
-  //       console.log(userAuth, "now i am logging in");
+        dispatch(
+          logIn({
+            displayName: logged_user.displayName,
+            email: logged_user.email,
+            photoURL: logged_user.photoURL,
+            uid: logged_user.uid,
+          })
+        );
+      }
+    } else {
+      setuser(null);
+      dispatch(logOut());
+    }
+  });
 
-  //       dispatch(
-  //         login({
-  //           email: userAuth.email,
-  //           uid: userAuth.uid,
-  //           displayName: userAuth.displayName,
-  //           photoUrl: userAuth.photoURL,
-  //         })
-  //       );
-  //     } else {
-  //       console.log("so now i am logging out :)))))");
+  const tableHeadData = useSelector(selectTableHeadData);
+  const tableBodyData = useSelector(selectTableBodyData);
 
-  //       dispatch(logout());
-  //     }
-  //   });
-  // }, []);
+  async function saveToDb() {
+    alert("wau this is cool :)");
+    console.log(tableHeadData, tableBodyData, "logging the data of database");
+    console.log("succes shall be there after that");
+    const referenceToFirestore = doc(db, "users", user.uid);
+    await setDoc(referenceToFirestore, { tableHeadData, tableBodyData });
+    console.log("succes");
+    alert("succesfully saved into database");
+
+    // console.log("succesfully saved into database");
+  }
+
+  useEffect(() => {
+    saveToDb();
+  }, [tableHeadData, tableBodyData]);
 
   return (
     <BrowserRouter>
-      {user !== null ? (
+      {user ? (
         <Routes>
-          <div className="App d-flex flex-row">
-            <Sidebar></Sidebar>
-            <Table></Table>
-          </div>
+          <Route path="/*" element={<Index />}></Route>
         </Routes>
       ) : (
         <Routes>

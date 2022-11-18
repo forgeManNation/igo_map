@@ -2,17 +2,20 @@
   text-align: center;
 }
 
-.saveButton{
+.saveButton {
   position: absolute;
   right: 10vh;
   bottom: 10vh;
   border-radius: 100%;
   padding: 2vh;
   background-color: rgb(136, 128, 220);
-
 }
 
-.saveButton:hover{
+.modalBackground {
+  background: rgba(black, 0.55);
+}
+
+.saveButton:hover {
   cursor: pointer;
   background-color: rgb(73, 63, 184);
 }

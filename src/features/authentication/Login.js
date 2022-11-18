@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { auth, signInWithEmailAndPassword } from "../../firebase";
 import authErrors from "./authErrors.json";
 import { useDispatch } from "react-redux";
-import { login } from "./userSlice";
+import { logIn } from "../sidebar/userSlice";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -17,20 +17,18 @@ const Login = () => {
 
   //sign in to firebase than change the high order User object with retrieved data
   //TODO: add functionality fow when the login fails
-  async function logIn() {
+  async function logInToAch() {
     await signInWithEmailAndPassword(auth, email, password)
-      .then((userAuth) => {
-        //succesfully logged in
-
-        // store the user's information in the redux state
+      .then((logged_user) => {
         dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
-            displayName: userAuth.user.displayName,
-            photoUrl: userAuth.user.photoURL,
+          logIn({
+            displayName: logged_user.displayName,
+            email: logged_user.email,
+            photoURL: logged_user.photoURL,
+            uid: logged_user.uid,
           })
         );
+        console.log("user is logged in");
       })
       .catch((err) => {
         //slicing the message to part which authErrors object has as key
@@ -101,7 +99,7 @@ const Login = () => {
         </div>
         {/* <p className='errorMessage'>{errorMessage}</p> */}
         <button
-          onClick={logIn}
+          onClick={logInToAch}
           className="authActionButton btn  btn-outline-dark"
         >
           Sign in

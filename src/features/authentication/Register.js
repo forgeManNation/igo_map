@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import "./authStyles.scss";
 import authErrors from "./authErrors.json";
 import { useDispatch } from "react-redux";
-import { login } from "./userSlice";
+import { logIn } from "../sidebar/userSlice";
 
 const Register = () => {
   const [email, setemail] = React.useState("");
@@ -20,6 +20,8 @@ const Register = () => {
   const [name, setname] = React.useState("");
   const [profilePicUrl, setprofilePicUrl] = React.useState("");
   const [errorMessage, seterrorMessage] = React.useState("");
+
+  const dispatch = useDispatch();
 
   let navigate = useNavigate();
 
@@ -32,10 +34,20 @@ const Register = () => {
         email,
         password
       );
+      alert("user is succesfully signed");
       updateProfile(userAuth.user, {
         displayName: createdName,
         photoURL: profilePicUrl,
       });
+
+      dispatch(
+        logIn({
+          displayName: userAuth.user.displayName,
+          email: userAuth.user.email,
+          photoURL: userAuth.user.photoURL,
+          uid: userAuth.user.uid,
+        })
+      );
     } catch (err) {
       //slicing the message to part which authErrors object has as key
       let splicedFireAuthMessage = err.message.substring(
