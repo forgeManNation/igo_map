@@ -9,14 +9,12 @@ import {
   deleteLastHypothesis,
 } from "./tableSlice";
 import { doc, getDoc, db } from "../../firebase";
-import { selectUser } from "../sidebar/userSlice.js";
 import HypothesisModal from "./modals/HypothesisModal.js";
 import EvidenceModal from "./modals/EvidenceModal.js";
 import "./table.scss";
 
 const Table = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
 
   const [modalHypothesisOpen, setmodalHypothesisOpen] = useState(false);
 

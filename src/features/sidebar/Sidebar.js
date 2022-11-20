@@ -1,22 +1,22 @@
 import React from "react";
 import "./sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut, selectUser } from "./userSlice";
 import { auth } from "../../firebase";
 import Addtask from "../../SaveTask";
+import {
+  selectActiveAnalysisIndex,
+  changeActiveAnalysisIndex,
+  selectAnalyses,
+} from "../table/tableSlice";
 
-const Sidebar = ({ activeAnalysisIndex }) => {
+const Sidebar = ({ user }) => {
   const dispatch = useDispatch();
-  const userInfo = useSelector(selectUser);
-
-  //these data shall than be pulled from redux tableSlice
-  const analysises = ["wauuu", "owauuu", "ojojoj"];
+  const analyses = useSelector(selectAnalyses);
+  const activeAnalysisIndex = useSelector(selectActiveAnalysisIndex);
 
   function signOut() {
     console.log(" I AM CALLING THE SIGNOUT");
-    auth.signOut().then(() => {
-      dispatch(logOut());
-    });
+    auth.signOut();
   }
 
   return (
@@ -33,8 +33,13 @@ const Sidebar = ({ activeAnalysisIndex }) => {
       </a>
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
-        {analysises.map((analysis, index) => (
-          <li class="nav-item">
+        {analyses.map((analysis, index) => (
+          <li
+            onClick={() => {
+              dispatch(changeActiveAnalysisIndex({ index: index }));
+            }}
+            class="nav-item"
+          >
             <a
               href="#"
               className={`nav-link ${
@@ -43,7 +48,7 @@ const Sidebar = ({ activeAnalysisIndex }) => {
               aria-current="page"
             >
               <svg class="bi me-2" width="16" height="16"></svg>
-              {analysis}
+              {analysis.analysisName}
             </a>
           </li>
         ))}
@@ -61,13 +66,13 @@ const Sidebar = ({ activeAnalysisIndex }) => {
           aria-expanded="false"
         >
           <img
-            src={userInfo.userPic}
+            src={user.userPic}
             alt="user"
             class="rounded-circle me-2"
             width="32"
             height="32"
           />
-          <strong>{userInfo.user.displayName || userInfo.user.email}</strong>
+          <strong>{user.displayName || user.email}</strong>
         </a>
         <ul
           class="dropdown-menu dropdown-menu-dark text-small shadow"

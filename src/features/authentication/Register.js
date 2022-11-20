@@ -11,8 +11,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./authStyles.scss";
 import authErrors from "./authErrors.json";
-import { useDispatch } from "react-redux";
-import { logIn } from "../sidebar/userSlice";
 
 const Register = () => {
   const [email, setemail] = React.useState("");
@@ -21,14 +19,13 @@ const Register = () => {
   const [profilePicUrl, setprofilePicUrl] = React.useState("");
   const [errorMessage, seterrorMessage] = React.useState("");
 
-  const dispatch = useDispatch();
-
   let navigate = useNavigate();
 
   async function register() {
     let createdName = name !== "" ? name : "user";
 
     try {
+      alert("so I am trying to register");
       const userAuth = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -39,15 +36,6 @@ const Register = () => {
         displayName: createdName,
         photoURL: profilePicUrl,
       });
-
-      dispatch(
-        logIn({
-          displayName: userAuth.user.displayName,
-          email: userAuth.user.email,
-          photoURL: userAuth.user.photoURL,
-          uid: userAuth.user.uid,
-        })
-      );
     } catch (err) {
       //slicing the message to part which authErrors object has as key
       let splicedFireAuthMessage = err.message.substring(

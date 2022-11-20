@@ -11,87 +11,89 @@ import { createSlice, current } from "@reduxjs/toolkit";
 
 //[
 const initialState = {
-  tableHeadData: [
-    // {
-    //   name: "first hypotesis",
-    //   information: "",
-    //   probabilityNumber: 0.5,
-    // },
-    // {
-    //   name: "second hypothesis",
-    //   information: "",
-    //   probabilityNumber: 0,
-    // },
-    // {
-    //   name: "first hypotesis",
-    //   information: "",
-    //   probabilityNumber: 0,
-    // },
-    // {
-    //   name: "first hypotesis",
-    //   information: "",
-    //   probabilityNumber: 0,
-    // },
-    // {
-    //   name: "first hypotesis",
-    //   information: "",
-    //   probabilityNumber: 0,
-    // },
-    // {
-    //   name: "first hypotesis",
-    //   information: "",
-    //   probabilityNumber: 0,
-    // },
-    // {
-    //   name: "first hypotesis",
-    //   information: "",
-    //   probabilityNumber: 0,
-    // },
-  ],
+  activeAnalysisIndex: 0,
+  analyses: [
+    {
+      analysisName: "Moje prvni analyza",
+      tableHeadData: [
+        {
+          name: "Jsem znova naloaden",
+          information: "",
+          probabilityNumber: 0.5,
+        },
+      ],
 
-  //
-  tableBodyData: [
-    // {
-    //   name: "evidence1",
-    //   type: "collection ",
-    //   credibility: "high",
-    //   relevance: "low",
-    //   inputCells: ["C", "", "N", "C", "I", "I", "I"],
-    // },
-    // {
-    //   name: "evidence2",
-    //   inputCells: ["C", "", "N", "C", "I", "I", "I"],
-    // },
+      //
+      tableBodyData: [],
+    },
   ],
 };
-//];
 
 export const tableSlice = createSlice({
   name: "table",
   initialState,
   reducers: {
+    refreshReduxState: (state, props) => {
+      state.activeAnalysisIndex = initialState.activeAnalysisIndex;
+      state.analyses = initialState.analyses;
+    },
+    loadDataFromFirestoreDatabaseToRedux: (state, props) => {
+      console.log(
+        "state is getting loaded from firestore with this data:",
+        props.payload
+      );
+      state.activeAnalysisIndex = props.payload.activeAnalysisIndex;
+      state.analyses = props.payload.analyses;
+    },
+    changeActiveAnalysisIndex: (state, props) => {
+      state.activeAnalysisIndex = props.payload.index;
+    },
     changeCompatibility: (state, props) => {
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
+
       console.log(props.payload, "jsem tady :))))");
-      state.tableBodyData[props.payload.tableRowindex].inputCells[
+      tableBodyData[props.payload.tableRowindex].inputCells[
         props.payload.cellIndex
       ] = props.payload.compatibility;
     },
     addEvidence: (state, props) => {
-      state.tableBodyData.push({
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
+
+      tableBodyData.push({
         name: props.payload.name,
         type: props.payload.type,
         credibility: props.payload.credibility,
         relevance: props.payload.relevance,
-        inputCells: Array(state.tableHeadData.length).fill(""),
+        inputCells: Array(tableHeadData.length).fill(""),
       });
     },
     deleteLastEvidence: (state) => {
-      state.tableBodyData.pop();
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
+
+      tableBodyData.pop();
     },
     editEvidence: (state, props) => {
-      let oldInputCells = state.tableBodyData[props.payload.index].inputCells;
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
 
-      state.tableBodyData[props.payload.index] = {
+      let oldInputCells = tableBodyData[props.payload.index].inputCells;
+
+      tableBodyData[props.payload.index] = {
         name: props.payload.name,
         type: props.payload.type,
         credibility: props.payload.credibility,
@@ -100,42 +102,72 @@ export const tableSlice = createSlice({
       };
     },
     addHypothesis: (state, props) => {
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
+
       //pushing "" which result in menu to choose between compatible incompatble or neutral
-      state.tableBodyData.map((bodyRow) => {
+      tableBodyData.map((bodyRow) => {
         bodyRow.inputCells.push("");
         return bodyRow.inputCells;
       });
 
-      state.tableHeadData.push({
+      tableHeadData.push({
         name: props.payload.hypothesisName,
         information: props.payload.hypothesisAdditionalInformation,
         probabilityNumber: 0,
       });
     },
     deleteSpecifiedHypothesis: (state, props) => {
-      state.tableBodyData.map((bodyRow) => {
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
+
+      tableBodyData.map((bodyRow) => {
         bodyRow.inputCells.splice(props.payload.index, 1);
         return bodyRow.inputCells;
       });
 
-      state.tableHeadData.splice(props.payload.index, 1);
+      tableHeadData.splice(props.payload.index, 1);
     },
     deleteLastHypothesis: (state) => {
-      state.tableBodyData.map((bodyRow) => {
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
+
+      tableBodyData.map((bodyRow) => {
         bodyRow.inputCells.pop();
         return bodyRow.inputCells;
       });
-      state.tableHeadData.pop();
+      tableHeadData.pop();
     },
     editHypothesis: (state, props) => {
-      state.tableHeadData.splice(props.payload.index, 1, {
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
+
+      tableHeadData.splice(props.payload.index, 1, {
         name: props.payload.name,
         information: props.payload.information,
         probabilityNumber: 0,
       });
     },
     deleteSpecifiedEvidence: (state, props) => {
-      state.tableBodyData.splice(props.payload.index, 1);
+      //table data of table that is active
+      const tableHeadData =
+        state.analyses[state.activeAnalysisIndex].tableHeadData;
+      const tableBodyData =
+        state.analyses[state.activeAnalysisIndex].tableBodyData;
+
+      tableBodyData.splice(props.payload.index, 1);
     },
   },
 });
@@ -150,10 +182,65 @@ export const {
   deleteLastHypothesis,
   addHypothesis,
   editHypothesis,
+  changeActiveAnalysisIndex,
+  loadDataFromFirestoreDatabaseToRedux,
+  refreshReduxState,
 } = tableSlice.actions;
 
-export const selectTableHeadData = (state) => state.table.tableHeadData;
+export const selectActiveAnalysisIndex = (state) =>
+  state.table.activeAnalysisIndex;
 
-export const selectTableBodyData = (state) => state.table.tableBodyData;
+export const selectAnalyses = (state) => state.table.analyses;
+
+export const selectTableHeadData = (state) =>
+  state.table.analyses[state.table.activeAnalysisIndex].tableHeadData;
+
+export const selectTableBodyData = (state) =>
+  state.table.analyses[state.table.activeAnalysisIndex].tableBodyData;
+
+export const selectAllUserData = (state) => state.table;
 
 export default tableSlice.reducer;
+
+// {
+//   name: "second hypothesis",
+//   information: "",
+//   probabilityNumber: 0,
+// },
+// {
+//   name: "first hypotesis",
+//   information: "",
+//   probabilityNumber: 0,
+// },
+// {
+//   name: "first hypotesis",
+//   information: "",
+//   probabilityNumber: 0,
+// },
+// {
+//   name: "first hypotesis",
+//   information: "",
+//   probabilityNumber: 0,
+// },
+// {
+//   name: "first hypotesis",
+//   information: "",
+//   probabilityNumber: 0,
+// },
+// {
+//   name: "first hypotesis",
+//   information: "",
+//   probabilityNumber: 0,
+// },
+
+// {
+//   name: "evidence1",
+//   type: "collection ",
+//   credibility: "high",
+//   relevance: "low",
+//   inputCells: ["C", "", "N", "C", "I", "I", "I"],
+// },
+// {
+//   name: "evidence2",
+//   inputCells: ["C", "", "N", "C", "I", "I", "I"],
+// },

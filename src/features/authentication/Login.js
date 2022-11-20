@@ -4,13 +4,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, signInWithEmailAndPassword } from "../../firebase";
 import authErrors from "./authErrors.json";
-import { useDispatch } from "react-redux";
-import { logIn } from "../sidebar/userSlice";
 
 const Login = () => {
   let navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [errorMessage, seterrorMessage] = useState("");
@@ -18,30 +14,18 @@ const Login = () => {
   //sign in to firebase than change the high order User object with retrieved data
   //TODO: add functionality fow when the login fails
   async function logInToAch() {
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((logged_user) => {
-        dispatch(
-          logIn({
-            displayName: logged_user.displayName,
-            email: logged_user.email,
-            photoURL: logged_user.photoURL,
-            uid: logged_user.uid,
-          })
-        );
-        console.log("user is logged in");
-      })
-      .catch((err) => {
-        //slicing the message to part which authErrors object has as key
-        let splicedFireAuthMessage = err.message.substring(
-          err.message.indexOf("/") + 1,
-          err.message.indexOf(")")
-        );
+    await signInWithEmailAndPassword(auth, email, password).catch((err) => {
+      //slicing the message to part which authErrors object has as key
+      let splicedFireAuthMessage = err.message.substring(
+        err.message.indexOf("/") + 1,
+        err.message.indexOf(")")
+      );
 
-        //getting error rewritten for user
-        let userMessage = authErrors[splicedFireAuthMessage];
+      //getting error rewritten for user
+      let userMessage = authErrors[splicedFireAuthMessage];
 
-        seterrorMessage(userMessage);
-      });
+      seterrorMessage(userMessage);
+    });
   }
 
   return (

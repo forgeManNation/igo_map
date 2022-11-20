@@ -10,12 +10,14 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     logIn: (state, props) => {
-      console.log("so i am here right now right, props", props.payload);
-      state.user = props.payload;
+      if (state.user === null || current(state.user) !== props.payload) {
+        state.user = props.payload;
+      }
     },
     logOut: (state) => {
-      console.log("but now o do turn into null ");
-      state.user = null;
+      if (state.user !== null) {
+        state.user = null;
+      }
     },
   },
 });
