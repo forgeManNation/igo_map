@@ -18,7 +18,13 @@ const EvidenceModal = (props) => {
     } else {
       dispatch(
         // props.editEvidenceToTable()
-        editEvidence({ name, type, credibility, relevance, index: props.index })
+        editEvidence({
+          name,
+          type,
+          credibility,
+          relevance,
+          index: props.index,
+        })
       );
     }
   }
@@ -54,7 +60,6 @@ const EvidenceModal = (props) => {
       const bsModal = Modal.getInstance(evidenceModal);
 
       if (bsModal !== null) {
-        alert("so now it is not entirely hidden");
         bsModal.hide();
       }
     }

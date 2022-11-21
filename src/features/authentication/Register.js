@@ -25,13 +25,11 @@ const Register = () => {
     let createdName = name !== "" ? name : "user";
 
     try {
-      alert("so I am trying to register");
       const userAuth = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      alert("user is succesfully signed");
       updateProfile(userAuth.user, {
         displayName: createdName,
         photoURL: profilePicUrl,

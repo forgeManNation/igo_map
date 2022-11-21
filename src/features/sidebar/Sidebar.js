@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase";
@@ -7,6 +7,7 @@ import {
   selectActiveAnalysisIndex,
   changeActiveAnalysisIndex,
   selectAnalyses,
+  selectAllUserData,
 } from "../table/tableSlice";
 
 const Sidebar = ({ user }) => {
@@ -18,6 +19,33 @@ const Sidebar = ({ user }) => {
     console.log(" I AM CALLING THE SIGNOUT");
     auth.signOut();
   }
+
+  const addAnalysisIcon = (
+    <i class="bi bi-plus-circle-fill sidebarIcon" role="button"></i>
+  );
+  const removeAnalysisIcon = (
+    <i class="bi bi-dash-circle-fill sidebarIcon" role="button"></i>
+  );
+
+  const checkMarkIcon = <i class="bi bi-check sidebarIcon" role="button"></i>;
+
+  const xMarkIcon = <i class="bi bi-x sidebarIcon" role="button"></i>;
+
+  const [newAnalysisInputValue, setnewAnalysisInputValue] = useState("");
+  function addNewAnalysis() {
+    console.log(analyses, "logging analyses");
+    let newAnalysisNameIsAlreadyUsed = analyses.some(
+      (analysis) => analysis.analysisName === newAnalysisInputValue
+    );
+
+    if (!newAnalysisNameIsAlreadyUsed) {
+      alert("so now i should add new data to db");
+    } else alert("This name is already used, try a unique one instead");
+
+    setaddNewAnalysisInputOpen(false);
+  }
+
+  const [addNewAnalysisInputOpen, setaddNewAnalysisInputOpen] = useState(false);
 
   return (
     <div
@@ -52,6 +80,41 @@ const Sidebar = ({ user }) => {
             </a>
           </li>
         ))}
+        <li>
+          {addNewAnalysisInputOpen ? (
+            <div className="d-flex flex-row">
+              <input
+                placeholder="new hypothesis name"
+                value={newAnalysisInputValue}
+                onChange={(e) => {
+                  setnewAnalysisInputValue(e);
+                }}
+              ></input>
+              &nbsp;
+              <span onClick={addNewAnalysis}>{checkMarkIcon}</span>
+              &nbsp;
+              <span
+                onClick={() => {
+                  setaddNewAnalysisInputOpen(false);
+                }}
+              >
+                {xMarkIcon}
+              </span>
+            </div>
+          ) : (
+            <div className="d-flex flex-row justify-content-center">
+              <span
+                onClick={() => {
+                  setaddNewAnalysisInputOpen(true);
+                }}
+              >
+                {addAnalysisIcon}
+              </span>
+              &nbsp; &nbsp; &nbsp;
+              <span>{removeAnalysisIcon}</span>
+            </div>
+          )}
+        </li>
       </ul>
 
       <span>this is where the data should be stored</span>

@@ -32,7 +32,6 @@ function App() {
               fireStoreUserDataDocSnap.data();
 
             console.log("so now I am changing user data with these :)");
-            alert(" I am changing data with the ones from db");
             dispatch(
               loadDataFromFirestoreDatabaseToRedux(
                 diaryDataFromFirestoreDatabase
@@ -77,7 +76,6 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="/*" element={<Login />} />
-          {/* <SignIn></SignIn> */}
         </Routes>
       )}
     </BrowserRouter>

@@ -39,6 +39,12 @@ const Table = () => {
   const [addNewColumnButtonTooltipOpen, setaddNewColumnButtonTooltipOpen] =
     useState(false);
 
+  function deleteEvidence(tableRowindex) {
+    if (window.confirm("do you really want to delete evidence?")) {
+      dispatch(deleteLastEvidence(tableRowindex));
+    }
+  }
+
   return (
     <>
       <div class="container">
@@ -143,7 +149,7 @@ const Table = () => {
               class="table-alternating-button"
               aria-label="delete last evidence"
               onClick={() => {
-                dispatch(deleteLastEvidence());
+                deleteEvidence();
               }}
             >
               <i class="bi bi-dash-square-fill table-alternating-icon"></i>

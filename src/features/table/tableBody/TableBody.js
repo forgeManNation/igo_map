@@ -5,6 +5,7 @@ import {
   selectTableBodyData,
   changeCompatibility,
   deleteSpecifiedEvidence,
+  deleteLastEvidence,
 } from "../tableSlice";
 import EditEvidenceIconAndModal from "./EditEvidenceIconAndModal.js";
 import "./tableBody.scss";
@@ -16,6 +17,12 @@ const TableBody = () => {
   const [visibility, setvisibility] = useState(
     Array(tableBodyData.length).fill({ display: "none" })
   );
+
+  function deleteEvidence(tableRowindex) {
+    if (window.confirm("do you really want to delete evidence?")) {
+      dispatch(deleteSpecifiedEvidence(tableRowindex));
+    }
+  }
 
   const editIcon = <i role="button" class="bi bi-pen-fill"></i>;
   const deleteIcon = <i class="bi bi-trash3-fill"></i>;
@@ -41,7 +48,7 @@ const TableBody = () => {
                   role="button"
                   className="editEvidenceIcon animate__animated animate__infinite  animate__pulse"
                   onClick={() => {
-                    dispatch(deleteSpecifiedEvidence(tableRowindex));
+                    deleteEvidence(tableRowindex);
                   }}
                 >
                   {deleteIcon}
