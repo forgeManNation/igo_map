@@ -13,19 +13,25 @@ const Login = () => {
 
   //sign in to firebase than change the high order User object with retrieved data
   //TODO: add functionality fow when the login fails
-  async function logInToAch() {
-    await signInWithEmailAndPassword(auth, email, password).catch((err) => {
-      //slicing the message to part which authErrors object has as key
-      let splicedFireAuthMessage = err.message.substring(
-        err.message.indexOf("/") + 1,
-        err.message.indexOf(")")
-      );
+  function logInToAch() {
+    console.log("I happen?");
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("user is succesfully signed in");
+      })
+      .catch((err) => {
+        console.log("got an error boss");
+        //slicing the message to part which authErrors object has as key
+        let splicedFireAuthMessage = err.message.substring(
+          err.message.indexOf("/") + 1,
+          err.message.indexOf(")")
+        );
 
-      //getting error rewritten for user
-      let userMessage = authErrors[splicedFireAuthMessage];
+        //getting error rewritten for user
+        let userMessage = authErrors[splicedFireAuthMessage];
 
-      seterrorMessage(userMessage);
-    });
+        seterrorMessage(userMessage);
+      });
   }
 
   return (

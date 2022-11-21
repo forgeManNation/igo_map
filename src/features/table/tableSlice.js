@@ -15,15 +15,7 @@ const initialState = {
   analyses: [
     {
       analysisName: "Moje prvni analyza",
-      tableHeadData: [
-        {
-          name: "Jsem znova naloaden",
-          information: "",
-          probabilityNumber: 0.5,
-        },
-      ],
-
-      //
+      tableHeadData: [],
       tableBodyData: [],
     },
   ],
