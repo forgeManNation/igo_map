@@ -16,6 +16,12 @@ const TableHead = () => {
 
   const deleteHypothesisIcon = <i class="bi bi-trash3-fill "></i>;
 
+  function deleteHypothesis (index) {
+    if(window.confirm("do you really want to delete the hypothesis")){
+    dispatch(deleteSpecifiedHypothesis(index))
+  }
+  }
+
   return (
     <thead>
       <tr>
@@ -55,7 +61,7 @@ const TableHead = () => {
               <span
                 role="button"
                 className="animate__animated animate__infinite  animate__pulse"
-                onClick={() => dispatch(deleteSpecifiedHypothesis(index))}
+                onClick={() => deleteHypothesis(index)}
                 id={"informationPopover" + index}
               >
                 {deleteHypothesisIcon}

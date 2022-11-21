@@ -7,9 +7,9 @@ const HypothesisModal = (props) => {
 
   const dispatch = useDispatch();
 
-  const [hypothesisName, sethypothesisName] = useState(props.hypothesisName);
+  const [hypothesisName, sethypothesisName] = useState(props.hypothesisName || "");
   const [hypothesisAdditionalInformation, sethypothesisAdditionalInformation] =
-    useState(props.hypothesisAdditionalInformation);
+    useState(props.hypothesisAdditionalInformation || "");
 
   function submitHypothesis() {
     if (props.hypothesisName === undefined) {
