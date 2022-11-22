@@ -8,3 +8,23 @@
 .sidebarIcon {
   font-size: x-large;
 }
+
+.active {
+  //main.$base-color
+  background-color: rgb(99, 87, 229) !important;
+}
+
+.analysesListContainer {
+  flex: 1;
+  display: flex;
+  overflow: auto;
+}
+
+.analysesList {
+  word-break: break-word;
+  display: flex;
+  min-height: min-content;
+  //   max-height: 50vh;
+  //   overflow-x: auto;
+  //   overflow-y: scroll;
+}

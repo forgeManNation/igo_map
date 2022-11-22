@@ -58,6 +58,10 @@ function App() {
   useEffect(() => {
     //checking whether data from firestore database are loaded in already to avoid saving wrong unloaded data
     if (autosavingIntoFireStore.current && user !== null) {
+      console.log(
+        userData.activeAnalysisIndex,
+        " -> is the active analysis index "
+      );
       const referenceToFirestore = doc(db, "users", user.uid);
       setDoc(referenceToFirestore, userData).then(() => {
         console.log("succesfully saved into database");

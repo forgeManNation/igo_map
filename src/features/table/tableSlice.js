@@ -40,6 +40,23 @@ export const tableSlice = createSlice({
     changeActiveAnalysisIndex: (state, props) => {
       state.activeAnalysisIndex = props.payload.index;
     },
+    createNewAnalysis: (state, props) => {
+      state.analyses.push({
+        analysisName: props.payload.analysisName,
+        tableBodyData: [],
+        tableHeadData: [],
+      });
+    },
+    removeLastAnalysis: (state) => {
+      //changing the active index so that some analysis is always selected
+      //if active / selected index is of the hypothesis which will be deleted
+      if (state.activeAnalysisIndex === state.analyses.length - 1) {
+        state.activeAnalysisIndex = state.activeAnalysisIndex - 1;
+      }
+
+      //removing last analysis
+      state.analyses.pop();
+    },
     changeCompatibility: (state, props) => {
       //table data of table that is active
       const tableHeadData =
@@ -177,6 +194,8 @@ export const {
   changeActiveAnalysisIndex,
   loadDataFromFirestoreDatabaseToRedux,
   refreshReduxState,
+  removeLastAnalysis,
+  createNewAnalysis,
 } = tableSlice.actions;
 
 export const selectActiveAnalysisIndex = (state) =>
