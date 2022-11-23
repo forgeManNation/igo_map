@@ -7,6 +7,7 @@ import {
   db,
   doc,
   setDoc,
+  signInAnonymously,
 } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import "./authStyles.scss";
@@ -46,6 +47,10 @@ const Register = () => {
 
       seterrorMessage(userMessage);
     }
+  }
+
+  async function loginAnonymously() {
+    await signInAnonymously(auth);
   }
 
   return (
@@ -136,7 +141,9 @@ const Register = () => {
             Register
           </button>
           &nbsp;&nbsp;
-          <button className="btn text-dark">guest login</button>
+          <button className="btn text-dark" onClick={loginAnonymously}>
+            guest login
+          </button>
         </div>
 
         {/* if register failed display this message  */}

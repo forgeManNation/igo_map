@@ -13,16 +13,28 @@ import { auth } from "./firebase";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
 import AuthenticatedApp from "./features/AuthenticatedApp.js";
+import { logIn, logOut, selectUser } from "./userSlice";
 
 function App() {
   const dispatch = useDispatch();
-  const [user, setuser] = useState(null);
+
   const autosavingIntoFireStore = useRef(false);
+
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     onAuthStateChanged(auth, (logged_user) => {
-      //if logged user exist than try to load his data from firestore
       if (logged_user !== null) {
+        //if user exists than setting giving his data to redux store
+        const userToSaveTORedux = {
+          displayName: logged_user.displayName,
+          email: logged_user.email,
+          photoUrl: logged_user.photoURL,
+          uid: logged_user.uid,
+        };
+        dispatch(logIn(userToSaveTORedux));
+
+        //if logged user exist than try to load his data from firestore
         const firebaseFirestoreReference = doc(db, "users", logged_user.uid);
         getDoc(firebaseFirestoreReference).then((fireStoreUserDataDocSnap) => {
           //proceeds if users db exist, if user does not have a firestore database then programm uses default state stored in redux file tableSlice
@@ -31,7 +43,6 @@ function App() {
             let diaryDataFromFirestoreDatabase =
               fireStoreUserDataDocSnap.data();
 
-            console.log("so now I am changing user data with these :)");
             dispatch(
               loadDataFromFirestoreDatabaseToRedux(
                 diaryDataFromFirestoreDatabase
@@ -46,9 +57,8 @@ function App() {
       else {
         autosavingIntoFireStore.current = false;
         dispatch(refreshReduxState());
+        dispatch(logOut());
       }
-
-      setuser(logged_user);
     });
   }, []);
 
@@ -73,7 +83,7 @@ function App() {
     <BrowserRouter>
       {user ? (
         <Routes>
-          <Route path="/*" element={<AuthenticatedApp user={user} />}></Route>
+          <Route path="/*" element={<AuthenticatedApp />}></Route>
         </Routes>
       ) : (
         <Routes>

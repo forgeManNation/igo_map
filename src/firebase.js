@@ -6,6 +6,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  signInAnonymously,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -49,4 +50,5 @@ export {
   deleteDoc,
   doc,
   setDoc,
+  signInAnonymously,
 };

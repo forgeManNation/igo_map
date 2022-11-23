@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar/Sidebar";
 import Table from "./table/Table";
 import { useSelector } from "react-redux";
-import { selectUser, logIn, logOut } from "./sidebar/userSlice";
+import { selectUser, logIn, logOut } from "../userSlice";
 import { useDispatch } from "react-redux";
 
 import {
@@ -15,7 +15,7 @@ import {
 } from "./table/tableSlice";
 import { auth, onAuthStateChanged, setDoc, doc, db, getDoc } from "../firebase";
 
-const AuthenticatedApp = ({ user }) => {
+const AuthenticatedApp = () => {
   const dispatch = useDispatch();
 
   const tableHeadData = useSelector(selectTableHeadData);
@@ -25,7 +25,7 @@ const AuthenticatedApp = ({ user }) => {
 
   return (
     <div className="App d-flex flex-row">
-      <Sidebar user={user}></Sidebar>
+      <Sidebar></Sidebar>
       <Table></Table>
       {/* <p>{JSON.stringify(useSelector(selectAllUserData))}</p> */}
     </div>
