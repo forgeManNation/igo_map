@@ -64,7 +64,6 @@ const Sidebar = () => {
             <a class="dropdown-item" onClick={openSettingsModal} href="#">
               Settings
             </a>
-            <SettingsModal></SettingsModal>
           </li>
           <li>
             <a class="dropdown-item" href="#">

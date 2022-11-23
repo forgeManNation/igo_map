@@ -44,13 +44,13 @@ const SettingsModal = () => {
             ></button>
           </div>
           <div className="modal-body d-flex flex-column">
+            TODO: pick theme color TODO: change users profile picture
             {/* <input
               onChange={changeHypothesisName}
               className="p-1"
               value={hypothesisName}
             ></input> */}
             <br></br>
-            <p>Additional informaiton about hypothesis</p>
           </div>
           <div className="modal-footer">
             <button
@@ -60,7 +60,9 @@ const SettingsModal = () => {
             >
               Close
             </button>
-            <button type="button" className="btn btn-primary"></button>
+            <button type="button" className="btn btn-primary">
+              Apply changes
+            </button>
           </div>
         </div>
       </div>

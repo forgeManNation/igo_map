@@ -4,7 +4,7 @@ import Table from "./table/Table";
 import { useSelector } from "react-redux";
 import { selectUser, logIn, logOut } from "../userSlice";
 import { useDispatch } from "react-redux";
-
+import SettingsModal from "./table/modals/SettingsModal";
 import {
   loadDataFromFirestoreDatabaseToRedux,
   selectAllUserData,
@@ -27,6 +27,7 @@ const AuthenticatedApp = () => {
     <div className="App d-flex flex-row">
       <Sidebar></Sidebar>
       <Table></Table>
+      <SettingsModal></SettingsModal>
       {/* <p>{JSON.stringify(useSelector(selectAllUserData))}</p> */}
     </div>
   );
