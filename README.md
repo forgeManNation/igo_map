@@ -1,10 +1,11 @@
-# Getting Started with Create React App
+# Map of intergovernmental organisations
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
+## About
+Intergovernmental organisations map - or IGO map for short,
+is an interactive application where you can select any of around 250 different international
+organisations which were data-scraped from [World Fact Book](https://www.cia.gov/the-world-factbook/) using python into a JSON file: , which now functioms as a user side database.
 
 ### `npm start`
 
