@@ -6,13 +6,6 @@ enumerate probability of them to be the true one.
 
 
 ## Technology specification
-Aplication is full stack and backend is made in firebase cloud ecosystem. Each user has his own firestore database collection
+Aplication is full stack and backend is made in firebase cloud ecosystem. Each user has its own firestore database collection
 accesible after his authentification. App uses redux and everytime the users data change,
-users data are uploaded to firebase.
-
-
-
-## Technology used
-Aplication uses React, Leaflet Tailwind and Typescript.
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+users data are uploaded to firebase firestore. App is styled with combination of .scss and bootstrap 5.
