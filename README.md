@@ -5,8 +5,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## About
 Intergovernmental organisations map or IGO map for short,
 is an interactive application where you can select any of around 250 different international
-organisations which were data-scraped from [World Fact Book](https://www.cia.gov/the-world-factbook/) using python into a JSON file: , which now functioms as a user side database.
-Additional data about all of the countries werr downloaded from public source and can be found in
+organisations which were data-scraped from [World Fact Book](https://www.cia.gov/the-world-factbook/) using python into a [JSON file](https://github.com/forgeManNation/map/blob/a94a262f0891681e9198abf3c95a37240c06052f/src/data/IGOs.json), which now functioms as a user side database.
+Additional data about all of the countries were downloaded from a public source and can be found in a [JSON file](https://github.com/forgeManNation/map/blob/a94a262f0891681e9198abf3c95a37240c06052f/src/data/world_countries_information.json)
 ### `npm start`
 
 Runs the app in the development mode.\
