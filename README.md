@@ -3,10 +3,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## About
-Intergovernmental organisations map - or IGO map for short,
+Intergovernmental organisations map or IGO map for short,
 is an interactive application where you can select any of around 250 different international
 organisations which were data-scraped from [World Fact Book](https://www.cia.gov/the-world-factbook/) using python into a JSON file: , which now functioms as a user side database.
-
+Additional data about all of the countries werr downloaded from public source and can be found in
 ### `npm start`
 
 Runs the app in the development mode.\
