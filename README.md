@@ -1,11 +1,15 @@
 # Analysis of competing hypotheses
 
 ## About
-Analysis of competing hypotheses is a method by which you can take multiple different hypothesis about a certain fenomen and based on evidences enumarate probab happen in tge futute or IGO map for short,
-is an interactive application where you can select any of around 250 different international
-organisations which were data-scraped from [World Fact Book](https://www.cia.gov/the-world-factbook/) using python into a [JSON file](https://github.com/forgeManNation/map/blob/a94a262f0891681e9198abf3c95a37240c06052f/src/data/IGOs.json), which now functioms as a user side database.
-Additional data about all of the countries were downloaded from a public source and can be found in another [JSON file](https://github.com/forgeManNation/map/blob/a94a262f0891681e9198abf3c95a37240c06052f/src/data/world_countries_information.json).
-In next versions of this app the information and most importantly the flag of each country will be stored server-side to prevent long loading times. Additional data about each organisation are fetched from wikipedia and loaded asynchronously. 
+Analysis of competing hypotheses is a method by which you can take multiple different hypothesis about a certain fenomen and based on evidence common to all of the hypotheses
+enumerate probability of them to be the true one.
+
+
+## Technology specification
+Aplication is full stack and backend is made in firebase cloud ecosystem. Each user has his own firestore database collection
+accesible after his authentification. App uses redux and everytime the users data change,
+users data are uploaded to firebase.
+
 
 
 ## Technology used
