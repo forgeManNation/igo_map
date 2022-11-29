@@ -2,7 +2,7 @@
 
 ## About
 Analysis of competing hypotheses is a method by which you can take multiple different hypothesis about a certain fenomen and based on evidence common to all of the hypotheses
-enumerate probability of them to be the true one.
+enumerate probability of them to be the true one. This app then tryes to help user by automatically making this matrix online. Each user can have an indefinitive amount of analyses.
 
 
 ## Technology specification
