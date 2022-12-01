@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import WikiPicture from "./WikiPictureOfOrganization";
 
-interface memebersDataFetchedFromWikipediaProps {
+interface organisationDataFetchedFromWikipediaProps {
   currentOrganizationWikiLink: string;
   currentOrganization: string;
 }
-const MemebersDataFetchedFromWikipedia = (
-  props: memebersDataFetchedFromWikipediaProps
+
+//this component fetches data about the organisation from wikipedia asynchronously and showcases it
+const OrganisationDataFetchedFromWikipedia = (
+  props: organisationDataFetchedFromWikipediaProps
 ) => {
-  useEffect(() => {
-    setwikipediaFetchedText("");
-  }, [props.currentOrganization]);
+
+
+  const [wikipediaFetchedText, setwikipediaFetchedText] = useState("");
 
   const spinningWheelIcon = (
     <svg
@@ -35,12 +37,11 @@ const MemebersDataFetchedFromWikipedia = (
     </svg>
   );
 
-  const [wikipediaFetchedText, setwikipediaFetchedText] = useState("");
 
   //getting only real page name from specific wikipedia url
   let currentOrganizationWikiPageName =
     props.currentOrganizationWikiLink.split("/")[
-      props.currentOrganizationWikiLink.split("/").length - 1
+    props.currentOrganizationWikiLink.split("/").length - 1
     ];
 
   //link to fetch content of wikipedia
@@ -48,6 +49,8 @@ const MemebersDataFetchedFromWikipedia = (
     "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&origin=*&titles=" +
     currentOrganizationWikiPageName;
 
+
+  //fetching from wikipedia
   fetch(currentOrganizationWikiLinkRefactored)
     .then((res) => res.json())
     .then((json) => json.query.pages[Object.keys(json.query.pages)[0]].extract)
@@ -57,6 +60,7 @@ const MemebersDataFetchedFromWikipedia = (
 
   return (
     <div>
+      {/* Fetching the title picture of wikipedia page */}
       <WikiPicture
         currentOrganizationWikiPageName={currentOrganizationWikiPageName}
       ></WikiPicture>
@@ -70,4 +74,4 @@ const MemebersDataFetchedFromWikipedia = (
   );
 };
 
-export default MemebersDataFetchedFromWikipedia;
+export default OrganisationDataFetchedFromWikipedia;

@@ -1,7 +1,7 @@
 import { Feature } from "geojson";
 import Control from "react-leaflet-custom-control";
 import { MapContainer, TileLayer, Popup, GeoJSON } from "react-leaflet";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import MapSettings from "./MapSettings";
 
 //leaflet coordinates for all states in the world
@@ -25,6 +25,8 @@ const Map = ({ currentOrganization }: mapProps) => {
   const [mapHovered, setMapHovered] = useState(false);
   const [fullscreenOn, setfullscreenOn] = useState(false);
 
+
+  // visual themes of map that can be changed after map is hovered via icon after map is hovered
   const [themes, setthemes] = useState([
     {
       name: "railway theme",
@@ -63,23 +65,33 @@ const Map = ({ currentOrganization }: mapProps) => {
     </svg>
   );
 
+  //change map visual theme
   function changeTheme(index: number) {
     let themeCopy = themes;
-    themeCopy = themeCopy.map((theme: MapTheme) => {
+
+
+    //uselect previously selected map theme
+    themeCopy = themes.map((theme: MapTheme) => {
       theme.selected = false;
       return theme;
     });
-    themes[index].selected = true;
+
+    //elect new picked map theme
+    themeCopy[index].selected = true;
     setthemes(themeCopy);
   }
 
-  //find selected theme by finding the one where selelcted property is true
+  //find selected theme by finding the one where selected property is true
   const selectedTheme =
     themes[themes.findIndex((theme: MapTheme) => theme.selected === true)];
 
+
+  //array of members of each IGO and their statuses in format [[IGOName, itsStatus]] eg. [[Zambia, Candidate country]]
   let organizationMembersArray =
     organizations[currentOrganization as keyof typeof organizations];
 
+
+  //visual style of members without status
   const membersWithoutStatusStyle = {
     style: {
       color: selectedTheme.memberCountriesColor,
@@ -88,6 +100,9 @@ const Map = ({ currentOrganization }: mapProps) => {
     },
   };
 
+
+  //seleting members which are particiapnts in the selected organisation and additionally do not have any status in it 
+  //eg. ["Gambia", ""] -> where empty second member of array means Gambia does not have a special status in the selected organisation
   const membersWithoutStatus: Feature[] = {
     ...world_countries_featureCollection,
   }.features
@@ -102,6 +117,7 @@ const Map = ({ currentOrganization }: mapProps) => {
     )
     .map((feature) => feature as Feature);
 
+  //visual style of members with special status in the organisation eg -> [Zambia, Candidate country] where "Candidate country" is special status of Zambia 
   const membersWithStatusStyle = {
     style: {
       color: selectedTheme.memberCountriesWithStatusColor,
@@ -110,6 +126,7 @@ const Map = ({ currentOrganization }: mapProps) => {
     },
   };
 
+  //seleting members which are particiapnts in the selected organisation and additionally do have a special status in it
   const membersWithStatus: Feature[] = {
     ...world_countries_featureCollection,
   }.features
@@ -139,6 +156,8 @@ const Map = ({ currentOrganization }: mapProps) => {
       return feature as Feature;
     });
 
+
+  //css styles of map for when full screen mode is activated
   const fullScreenMapStyle = {
     top: 0,
     right: 0,
@@ -152,8 +171,6 @@ const Map = ({ currentOrganization }: mapProps) => {
   };
 
   const basicMapStyle = { width: "100%", height: "80vh", zIndex: 5 };
-
-  console.log(fullscreenOn);
 
   return (
     <div
@@ -179,6 +196,7 @@ const Map = ({ currentOrganization }: mapProps) => {
               {...membersWithoutStatusStyle}
               data={e}
             >
+              {/* Popup that appears above a country without special status which is hovered */}
               <Popup>
                 {e.properties
                   ? ` ${e.properties.sovereignt} \n - full member`
@@ -193,6 +211,7 @@ const Map = ({ currentOrganization }: mapProps) => {
             {...membersWithStatusStyle}
             data={e}
           >
+            {/* Popup that appears above a country without special status which is hovered */}
             <Popup>
               {e.properties
                 ? `${e.properties.sovereignt} \n has ${e.properties.status} status in the organisation `
@@ -200,7 +219,8 @@ const Map = ({ currentOrganization }: mapProps) => {
             </Popup>
           </GeoJSON>
         ))}
-        {/* the triggering icon */}
+
+        {/* control buttons of map that appears in map on hover */}
         <Control prepend position="topright">
           {mapHovered ? (
             <div className="flex flex-row relative  mr-5 mt-4 ">

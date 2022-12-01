@@ -1,10 +1,9 @@
-import React, { TextareaHTMLAttributes, useEffect } from "react";
-import { Fragment, useRef, useState } from "react";
+import React from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   InformationCircleIcon,
   CheckIcon,
-  EmojiHappyIcon,
 } from "@heroicons/react/outline";
 
 interface introductionModalProps {

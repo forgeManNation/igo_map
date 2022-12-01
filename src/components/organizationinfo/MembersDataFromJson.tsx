@@ -7,7 +7,13 @@ import worldCountriesInformation from "../../data/world_countries_information.js
 interface membersDataFromJsonProps {
   currentOrganizationMembers: string[][];
 }
+
+
+//these are data of countries in a grid with flag, capital city ...
 const MembersDataFromJson = (props: membersDataFromJsonProps) => {
+
+
+
   const currentOrganizationMembersWithStatus =
     props.currentOrganizationMembers.filter(
       (member: String[]) => member[1] !== ""
@@ -15,14 +21,15 @@ const MembersDataFromJson = (props: membersDataFromJsonProps) => {
 
   let organizationsWithStatusesSeparated: { [key: string]: string[] } = {};
 
+  //
   currentOrganizationMembersWithStatus.forEach((member) => {
     if (organizationsWithStatusesSeparated[member[1]] === undefined) {
       organizationsWithStatusesSeparated[member[1]] = [];
     }
-
     organizationsWithStatusesSeparated[member[1]].push(member[0]);
   });
 
+  //
   const currentOrganizationMembersWithoutStatus =
     props.currentOrganizationMembers.filter(
       (member: String[]) => member[1] === ""
@@ -44,6 +51,7 @@ const MembersDataFromJson = (props: membersDataFromJsonProps) => {
         .includes(countryData.country)
     );
 
+  //icon to show aside from capital city
   const cityIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +67,7 @@ const MembersDataFromJson = (props: membersDataFromJsonProps) => {
     </svg>
   );
 
+  //icon to show aside from population of each country
   const populationIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +82,7 @@ const MembersDataFromJson = (props: membersDataFromJsonProps) => {
   return (
     <div className="  flex flex-col" style={{ maxHeight: "20%" }}>
       <h1 className=" text-2xl m-2 text-slate-200 uppercase">full members</h1>
+      {/* countries that do not have a status grid */}
       <div className=" grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2  gap-4 rounded-lg mb-6">
         {currentOrganizationCountriesInfoWithoutStatus.map((element, index) => {
           return (
@@ -139,6 +149,7 @@ const MembersDataFromJson = (props: membersDataFromJsonProps) => {
         })}
       </div>
 
+      {/* countries that do have a status, grid for each of their status */}
       {Object.keys(currentOrganizationCountriesInfoWithStatuses).map(
         (key, index) => {
           return (
@@ -229,12 +240,7 @@ const MembersDataFromJson = (props: membersDataFromJsonProps) => {
                           ></div>
                         </div>
                         <img
-                          style={{
-                            display: "block",
-                            marginLeft: "auto",
-                            marginRight: "auto",
-                          }}
-                          className="w-28"
+                          className="w-28 block mx-auto"
                           src={element.flag_base64!}
                         />
                       </span>

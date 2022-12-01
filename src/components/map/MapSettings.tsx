@@ -8,7 +8,7 @@ interface MapTheme {
   memberCountriesColor: string;
   memberCountriesWithStatusColor: string;
 }
-interface MapThemes extends Array<MapTheme> {}
+interface MapThemes extends Array<MapTheme> { }
 
 interface Props {
   themes: MapThemes;
@@ -16,7 +16,6 @@ interface Props {
 }
 
 const MapSettings = ({ themes, changeTheme }: Props) => {
-  const [mapSettingsOpen, setmapSettingsOpen] = React.useState(true);
 
   const mapIcon = (
     <svg
@@ -39,10 +38,7 @@ const MapSettings = ({ themes, changeTheme }: Props) => {
     <Popover className=" ">
       <Popover.Button>
         <div
-          onClick={() => {
-            setmapSettingsOpen(!mapSettingsOpen);
-          }}
-          className="   p-3 h-fit bg-blue-400 bg-opacity-50  hover:cursor-pointer hover:bg-opacity-100 rounded-full"
+          className="p-3 h-fit bg-blue-400 bg-opacity-50  hover:cursor-pointer hover:bg-opacity-100 rounded-full"
         >
           {mapIcon}
         </div>
@@ -56,9 +52,8 @@ const MapSettings = ({ themes, changeTheme }: Props) => {
                 changeTheme(index);
               }}
               key={"mapThemeButton" + index}
-              className={`cursor-pointer border-slate-600 border-2 text-slate-100 text-center  py-2 px-5  z-50 overflow-x-visible hover:bg-slate-500  ${
-                theme.selected ? `border-blue-500  bg-slate-500 border ` : ""
-              }`}
+              className={`cursor-pointer border-slate-600 border-2 text-slate-100 text-center  py-2 px-5  z-50 overflow-x-visible hover:bg-slate-500  ${theme.selected ? `border-blue-500  bg-slate-500 border ` : ""
+                }`}
             >
               {theme.name}
             </li>

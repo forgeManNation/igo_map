@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <div className="App" style={{ overflow: "auto", height: "100%" }}>
+    <div className="App">
       <div className=" flex flex-row ">
         <SearchBar
           triggerIntroductionModal={triggerIntroductionModal}
@@ -41,8 +41,7 @@ function App() {
           )}
         </div>
         <div
-          className={" flex flex-row  h-fit w-fit fixed right-0 m-7 bottom-5 "}
-          style={{ alignSelf: "flex-start" }}
+          className={" flex flex-row  h-fit w-fit fixed right-0 m-7 bottom-5 items-start"}
         >
           <div
             onClick={triggerIntroductionModal}
@@ -55,7 +54,7 @@ function App() {
             open={introductionModalOpen}
           ></IntroductionModal>
           {curentOrg ? (
-            <EditModal currentOrganization={curentOrg}></EditModal>
+            <EditModal key={String(curentOrg)} currentOrganization={curentOrg}></EditModal>
           ) : (
             <></>
           )}

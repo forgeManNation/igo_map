@@ -1,4 +1,4 @@
-import React, { TextareaHTMLAttributes, useEffect } from "react";
+import React from "react";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { PencilIcon } from "@heroicons/react/outline";
@@ -6,10 +6,20 @@ import organizations from "../../data/IGOs.json";
 import emailjs from "@emailjs/browser";
 
 interface editModalProps {
-  currentOrganization: String;
+  currentOrganization: string;
 }
 
 const EditModal = (props: editModalProps) => {
+
+  const wikiPage =
+    organizations[props.currentOrganization as keyof typeof organizations]
+      .wikiPage;
+  const [open, setOpen] = useState(false);
+  const [wikiValue, setwikiValue] = useState(wikiPage);
+  const [suggestionBoxValue, setsuggestionBoxValue] = useState("");
+  const cancelButtonRef = useRef(null);
+
+  //pencil like icon that appears on topleft of modal
   const editIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,6 +36,7 @@ const EditModal = (props: editModalProps) => {
     </svg>
   );
 
+
   const form = useRef() as React.MutableRefObject<HTMLFormElement>;
 
   function changeWikiLinkInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -35,6 +46,8 @@ const EditModal = (props: editModalProps) => {
   }
 
   function proposeChanges() {
+
+    //send an email to the administrator of the page with the modal data
     emailjs
       .sendForm(
         "service_vuwjrfj",
@@ -43,9 +56,6 @@ const EditModal = (props: editModalProps) => {
         "8L4NVsiqUC8RE1HZw"
       )
       .then(
-        (result: any) => {
-          console.log(result.text);
-        },
         (error: any) => {
           console.log(error.text);
         }
@@ -55,20 +65,6 @@ const EditModal = (props: editModalProps) => {
   function suggestionBoxValueChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setsuggestionBoxValue(e.target.value);
   }
-
-  const wikiPage =
-    organizations[props.currentOrganization as keyof typeof organizations]
-      .wikiPage;
-
-  useEffect(() => {
-    setwikiValue(wikiPage);
-  }, [wikiPage]);
-
-  const [open, setOpen] = useState(false);
-  const [wikiValue, setwikiValue] = useState(wikiPage);
-  const [suggestionBoxValue, setsuggestionBoxValue] = useState(wikiPage);
-
-  const cancelButtonRef = useRef(null);
 
   return (
     <>
@@ -163,9 +159,11 @@ const EditModal = (props: editModalProps) => {
                                 ease-in-out m-0 focus:text-gray-700 
                                 focus:bg-white focus:border-blue-900
                                 focus:outline-none"
-                                placeholder=" your suggestion"
+                                placeholder="country XYZ is not part of the organisation ZYXW, please correct it"
                                 onChange={suggestionBoxValueChange}
-                              ></textarea>
+                              >
+                                {suggestionBoxValue}
+                              </textarea>
                             </div>
                           </form>
                         </div>

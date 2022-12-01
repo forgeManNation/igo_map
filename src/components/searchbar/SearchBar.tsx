@@ -1,10 +1,8 @@
 import organisations from "../../data/IGOs.json";
 
-import { ReactNode, useState } from "react";
+import React, { ReactNode, useState } from "react";
 
-import React from "react";
-import { JsxAttribute } from "typescript";
-
+;
 // icon to hide the sidebar
 const arrowCircleLeft = (
   <svg
@@ -42,8 +40,13 @@ interface searchBarProps {
   triggerIntroductionModal: () => void;
 }
 const SearchBar = (props: searchBarProps) => {
+
+  //value that is being searched in searchbar
   const [searchValue, setsearchValue] = useState("");
+
+  //is sidebar expanded or not
   const [sideBarLarge, setsideBarLarge] = useState(false);
+
 
   function changeSearchValue(e: React.FormEvent<HTMLInputElement>) {
     setsearchValue(e.currentTarget.value);
@@ -53,11 +56,6 @@ const SearchBar = (props: searchBarProps) => {
     setsideBarLarge(!sideBarLarge);
   }
 
-  let organisationsArray = [];
-
-  for (const organisation in Object.keys(organisations)) {
-    organisationsArray.push(organisation);
-  }
 
   return !sideBarLarge ? (
     <div
@@ -110,9 +108,8 @@ const SearchBar = (props: searchBarProps) => {
             return (
               <div
                 key={"serchbarAlliance" + index}
-                className={`hover:bg-blue-800 ${
-                  index % 2 ? "bg-gray-800" : "bg-gray-600"
-                }`}
+                className={`hover:bg-blue-800 ${index % 2 ? "bg-gray-800" : "bg-gray-600"
+                  }`}
               >
                 <p
                   onClick={() => props.changeCurrentOrg(org)}
