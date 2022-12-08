@@ -12,6 +12,17 @@
 .active {
   //main.$base-color
   background-color: rgb(99, 87, 229) !important;
+  background-color: main.$base-color;
+}
+
+.changeAnalysisIcons {
+  display: none;
+}
+
+.nav-item:hover {
+  .changeAnalysisIcons {
+    display: inline-block;
+  }
 }
 
 .analysesListContainer {
@@ -25,7 +36,13 @@
   display: flex;
   min-height: min-content;
   width: 100%;
-  //   max-height: 50vh;
-  //   overflow-x: auto;
-  //   overflow-y: scroll;
+}
+
+.sidebar {
+  input {
+    margin: 0vh !important;
+  }
+  .openedInputToAddAnalysis {
+    margin-top: 7px !important;
+  }
 }

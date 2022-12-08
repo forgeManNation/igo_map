@@ -7,8 +7,9 @@ import {
   deleteSpecifiedEvidence,
   deleteLastEvidence,
 } from "../tableSlice";
-import EditEvidenceIconAndModal from "./EditEvidenceIconAndModal.js";
+// import EditEvidenceIconAndModal from "./EditEvidenceIconAndModal.js";
 import "./tableBody.scss";
+import { changeModalEvidenceOpen } from "../modals/modalSlice";
 const TableBody = () => {
   const tableBodyData = useSelector(selectTableBodyData);
 
@@ -26,6 +27,7 @@ const TableBody = () => {
 
   const editIcon = <i role="button" class="bi bi-pen-fill"></i>;
   const deleteIcon = <i class="bi bi-trash3-fill"></i>;
+  const editEvidenceIcon = <i class="bi bi-pen-fill"></i>;
 
   return (
     <tbody>
@@ -35,14 +37,24 @@ const TableBody = () => {
           <td className="nameCell">
             <span className="d-flex flex-row justify-content-center">
               <span className="iconsWrapper">
-                <EditEvidenceIconAndModal
-                  visibility={visibility[tableRowindex]}
-                  name={tableRow.name}
-                  type={tableRow.type}
-                  credibility={tableRow.credibility}
-                  relevance={tableRow.relevance}
-                  index={tableRowindex}
-                />
+                <span
+                  className="editEvidenceIcon animate__animated animate__infinite  animate__pulse"
+                  role="button"
+                  onClick={() => {
+                    dispatch(
+                      changeModalEvidenceOpen({
+                        open: true,
+                        name: tableRow.name,
+                        type: tableRow.type,
+                        credibility: tableRow.credibility,
+                        relevance: tableRow.relevance,
+                        index: tableRowindex,
+                      })
+                    );
+                  }}
+                >
+                  {editEvidenceIcon}
+                </span>
                 &nbsp;
                 <span
                   role="button"

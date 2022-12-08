@@ -3,9 +3,8 @@ import "./sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase";
 import SidebarAnalysesSegment from "./SidebarAnalysesSegment";
-import { selectUser } from "../../userSlice";
-import SettingsModal from "../table/modals/SettingsModal";
-import { changeModalSettingsOpen } from "../table/modals/modalSlice";
+import { changeAddNewAnalysisInput, selectUser } from "../../userSlice";
+import { changeModalProfileOpen } from "../table/modals/modalSlice";
 
 const Sidebar = () => {
   function signOut() {
@@ -15,13 +14,17 @@ const Sidebar = () => {
 
   const dispatch = useDispatch();
 
-  function openSettingsModal() {
-    dispatch(changeModalSettingsOpen({ open: true }));
+  function openChangeProfileModal() {
+    dispatch(changeModalProfileOpen({ open: true }));
+  }
+
+  function addNewProject() {
+    dispatch(changeAddNewAnalysisInput({ newInputState: true }));
   }
 
   return (
     <div
-      class="main d-flex flex-column flex-shrink-0 p-3 text-dark "
+      class="sidebar main d-flex flex-column flex-shrink-0 p-3 text-dark "
       style={{ width: "280px", height: "100%" }}
     >
       <a
@@ -56,17 +59,12 @@ const Sidebar = () => {
           aria-labelledby="dropdownUser1"
         >
           <li>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" onClick={addNewProject} href="#">
               New project...
             </a>
           </li>
           <li>
-            <a class="dropdown-item" onClick={openSettingsModal} href="#">
-              Settings
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" onClick={openChangeProfileModal} href="#">
               Profile
             </a>
           </li>

@@ -5,6 +5,7 @@ import {
   selectAddNewAnalysisInputOpen,
   changeAddNewAnalysisInput,
 } from "../../userSlice";
+import { changeModalNameOpen } from "../table/modals/modalSlice";
 
 import {
   selectActiveAnalysisIndex,
@@ -13,18 +14,20 @@ import {
   selectAllUserData,
   removeLastAnalysis,
   createNewAnalysis,
+  deleteAnalysis,
 } from "../table/tableSlice";
 
 const SidebarAnalysesSegment = () => {
   const analyses = useSelector(selectAnalyses);
   const activeAnalysisIndex = useSelector(selectActiveAnalysisIndex);
   const dispatch = useDispatch();
-  // const [addNewAnalysisInputOpen, setaddNewAnalysisInputOpen] = useState(false);
+
+  const deleteIcon = <i class=" bi bi-trash-fill"></i>;
 
   //continue on getting data from redux
   const addNewAnalysisInputOpen = useSelector(selectAddNewAnalysisInputOpen);
   const addAnalysisIcon = (
-    <i class="bi bi-plus-circle-fill sidebarIcon" role="button"></i>
+    <i class="bi  bi-plus-circle-fill sidebarIcon" role="button"></i>
   );
   const removeAnalysisIcon = (
     <i class="bi bi-dash-circle-fill sidebarIcon" role="button"></i>
@@ -66,8 +69,6 @@ const SidebarAnalysesSegment = () => {
   }
 
   function removeUsersLastAnalysis() {
-    console.log("I happen as well lol?");
-
     //check whether this is not the use
     //r's last analysis as user is required to have at least one
     if (analyses.length > 1) {
@@ -78,6 +79,31 @@ const SidebarAnalysesSegment = () => {
       alert("Can not delete your only analysis");
     }
   }
+
+  function deleteUsersAnalysis(indexToDelete, e) {
+    //stops parents onClick from firing
+    e.stopPropagation();
+
+    if (window.confirm("Do you really want to delete the analysis")) {
+      dispatch(deleteAnalysis({ indexToDetete: indexToDelete }));
+    }
+  }
+
+  function triggerChangeNameModalOpen(e, index, name) {
+    //stops parents onClick from firing
+    e.stopPropagation();
+
+    console.log(
+      "so now I am calling this one, this is hte index",
+      index,
+      "this is the old name",
+      name
+    );
+    dispatch(changeModalNameOpen({ open: true, index: index, name: name }));
+  }
+
+  const editIcon = <i class=" bi bi-pen-fill"></i>;
+
   return (
     <div className="analysesListContainer">
       <ul class="nav nav-pills flex-column mb-auto analysesList">
@@ -95,10 +121,26 @@ const SidebarAnalysesSegment = () => {
               }`}
               aria-current="page"
             >
-              {/* <svg class="bi me-2" width="16" height="16"></svg> */}
               {analysis.analysisName}
-
-              {/* <span>{deleteIcon}</span> */}
+              {/* when hovering  over list of anylysis, an icon to delete or edit pops up on hover*/}
+              <span className="changeAnalysisIcons">
+                &nbsp;
+                <span
+                  onClick={(e) => {
+                    triggerChangeNameModalOpen(e, index, analysis.analysisName);
+                  }}
+                >
+                  {editIcon}
+                </span>
+                &nbsp;
+                <span
+                  onClick={(e) => {
+                    deleteUsersAnalysis(index, e);
+                  }}
+                >
+                  {deleteIcon}
+                </span>
+              </span>
             </a>
           </li>
         ))}
@@ -108,7 +150,8 @@ const SidebarAnalysesSegment = () => {
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="d-flex flex-row">
                 <input
-                  placeholder="new hypothesis name"
+                  className="openedInputToAddAnalysis"
+                  placeholder="new analysis name"
                   value={newAnalysisInputValue}
                   onChange={(e) => {
                     setnewAnalysisInputValue(e.target.value);

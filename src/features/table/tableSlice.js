@@ -1,20 +1,10 @@
 import { createSlice, current } from "@reduxjs/toolkit";
-// import { doc, getDoc, db } from "../../firebase";
 
-// const docRef = doc(db, "cities", "SF");
-
-// const docSnap = getDoc(docRef).then((doc) => {
-//   console.log(doc, "log me in the doc");
-// });
-
-// console.log(docSnap, "docSnap");
-
-//[
 const initialState = {
   activeAnalysisIndex: 0,
   analyses: [
     {
-      analysisName: "Moje prvni analyza",
+      analysisName: "My first analysis",
       tableHeadData: [],
       tableBodyData: [],
     },
@@ -30,15 +20,24 @@ export const tableSlice = createSlice({
       state.analyses = initialState.analyses;
     },
     loadDataFromFirestoreDatabaseToRedux: (state, props) => {
-      console.log(
-        "state is getting loaded from firestore with this data:",
-        props.payload
-      );
       state.activeAnalysisIndex = props.payload.activeAnalysisIndex;
       state.analyses = props.payload.analyses;
     },
     changeActiveAnalysisIndex: (state, props) => {
       state.activeAnalysisIndex = props.payload.index;
+    },
+    changeAnalysisName: (state, props) => {
+      const newIndex = props.payload.indexOfAnalysisToRename;
+      const analysisNewName = props.payload.analysisNewName;
+
+      state.analyses[newIndex].analysisName = analysisNewName;
+
+      console.log(
+        "what is the new index, ",
+        newIndex,
+        " what is the new name: ",
+        analysisNewName
+      );
     },
     createNewAnalysis: (state, props) => {
       state.analyses.push({
@@ -46,6 +45,19 @@ export const tableSlice = createSlice({
         tableBodyData: [],
         tableHeadData: [],
       });
+    },
+    deleteAnalysis: (state, props) => {
+      if (state.analyses.length <= 1) {
+        alert("Can not delete the only analysis");
+      } else {
+        if (
+          state.activeAnalysisIndex === state.analyses.length - 1 ||
+          props.payload.indexToDetete < state.activeAnalysisIndex
+        ) {
+          state.activeAnalysisIndex = state.activeAnalysisIndex - 1;
+        }
+        state.analyses.splice(props.payload.indexToDetete, 1);
+      }
     },
     removeLastAnalysis: (state) => {
       //changing the active index so that some analysis is always selected
@@ -64,7 +76,6 @@ export const tableSlice = createSlice({
       const tableBodyData =
         state.analyses[state.activeAnalysisIndex].tableBodyData;
 
-      console.log(props.payload, "jsem tady :))))");
       tableBodyData[props.payload.tableRowindex].inputCells[
         props.payload.cellIndex
       ] = props.payload.compatibility;
@@ -196,12 +207,17 @@ export const {
   refreshReduxState,
   removeLastAnalysis,
   createNewAnalysis,
+  deleteAnalysis,
+  changeAnalysisName,
 } = tableSlice.actions;
 
 export const selectActiveAnalysisIndex = (state) =>
   state.table.activeAnalysisIndex;
 
 export const selectAnalyses = (state) => state.table.analyses;
+
+export const selectAnalysisName = (state) =>
+  state.table.analyses[state.table.activeAnalysisIndex].analysisName;
 
 export const selectTableHeadData = (state) =>
   state.table.analyses[state.table.activeAnalysisIndex].tableHeadData;
@@ -212,46 +228,3 @@ export const selectTableBodyData = (state) =>
 export const selectAllUserData = (state) => state.table;
 
 export default tableSlice.reducer;
-
-// {
-//   name: "second hypothesis",
-//   information: "",
-//   probabilityNumber: 0,
-// },
-// {
-//   name: "first hypotesis",
-//   information: "",
-//   probabilityNumber: 0,
-// },
-// {
-//   name: "first hypotesis",
-//   information: "",
-//   probabilityNumber: 0,
-// },
-// {
-//   name: "first hypotesis",
-//   information: "",
-//   probabilityNumber: 0,
-// },
-// {
-//   name: "first hypotesis",
-//   information: "",
-//   probabilityNumber: 0,
-// },
-// {
-//   name: "first hypotesis",
-//   information: "",
-//   probabilityNumber: 0,
-// },
-
-// {
-//   name: "evidence1",
-//   type: "collection ",
-//   credibility: "high",
-//   relevance: "low",
-//   inputCells: ["C", "", "N", "C", "I", "I", "I"],
-// },
-// {
-//   name: "evidence2",
-//   inputCells: ["C", "", "N", "C", "I", "I", "I"],
-// },

@@ -5,8 +5,43 @@
 // $bg-color: #f3f0f0;
 // $shade-color: #010B2E;
 
+.tableContainer {
+  margin: 7vh !important;
+}
+
+.bottom-right-buttons {
+  position: absolute;
+  margin: 3vh !important;
+  bottom: 0vh;
+  right: 2vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.analysisNameAboveTable {
+  margin-bottom: 3vh;
+}
+
 table {
+  text-align: center;
   background-color: main.$bg-color;
+}
+
+@media print {
+  h2 {
+    text-align: center;
+  }
+  .nonprint {
+    display: none !important;
+  }
+  .table-alternating-button {
+    display: none !important;
+  }
+
+  .bi {
+    display: none !important;
+  }
 }
 
 .table-alternating-button {
@@ -16,7 +51,6 @@ table {
     color: main.$base-color;
     opacity: 0.88;
     font-size: xx-large;
-    // margin: 3vh;
   }
 }
 p,

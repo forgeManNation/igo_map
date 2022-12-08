@@ -1,0 +1,32 @@
+.aboutContainer {
+  margin-top: 2vh;
+  margin-bottom: 10vh;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.about {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  p {
+    color: rgb(36, 46, 64);
+  }
+
+  h1 {
+    text-align: center;
+    color: rgb(36, 46, 64);
+  }
+  height: 100%;
+}
+
+footer {
+  background-color: rgb(36, 46, 64);
+  color: aliceblue;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,29 +1,38 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Modal } from "bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addEvidence, editEvidence } from "../tableSlice";
+import { changeModalEvidenceOpen, selectModalEvidence } from "./modalSlice";
 
-const EvidenceModal = (props) => {
+const EvidenceModal = () => {
   const dispatch = useDispatch();
 
-  const [name, setname] = useState(props.name !== undefined ? props.name : "");
-  const [type, settype] = useState(props.type !== undefined ? props.type : "");
-  const [credibility, setcredibility] = useState(props.credibility || "Medium");
-  const [relevance, setrelevance] = useState(props.relevance || "Medium");
+  const evidenceModalData = useSelector(selectModalEvidence);
+
+  const [name, setname] = useState(
+    evidenceModalData.name !== undefined ? evidenceModalData.name : ""
+  );
+  const [type, settype] = useState(
+    evidenceModalData.type !== undefined ? evidenceModalData.type : ""
+  );
+  const [credibility, setcredibility] = useState(
+    evidenceModalData.credibility || "Medium"
+  );
+  const [relevance, setrelevance] = useState(
+    evidenceModalData.relevance || "Medium"
+  );
 
   function submitEvidence() {
-    if (props.name === undefined) {
-      // props.addEvidenceToTable()
+    if (evidenceModalData.index === undefined) {
       dispatch(addEvidence({ name, type, credibility, relevance }));
     } else {
       dispatch(
-        // props.editEvidenceToTable()
         editEvidence({
           name,
           type,
           credibility,
           relevance,
-          index: props.index,
+          index: evidenceModalData.index,
         })
       );
     }
@@ -50,7 +59,13 @@ const EvidenceModal = (props) => {
   useEffect(() => {
     let evidenceModal = modalRef.current;
 
-    if (props.launched) {
+    //when evidence modal is opened data are loaded into its states
+    setname(evidenceModalData.name);
+    setcredibility(evidenceModalData.credibility);
+    setrelevance(evidenceModalData.relevance);
+    settype(evidenceModalData.type);
+
+    if (evidenceModalData.open) {
       const bsModal = new Modal(evidenceModal, {
         backdrop: false,
         keyboard: false,
@@ -63,10 +78,10 @@ const EvidenceModal = (props) => {
         bsModal.hide();
       }
     }
-  }, [props.launched]);
+  }, [evidenceModalData.open]);
 
   async function launchAndSumbit() {
-    props.launchEvidenceModal();
+    dispatch(changeModalEvidenceOpen({ open: false }));
 
     submitEvidence();
     console.log("before this happens 5 seonds shall pass");
@@ -84,12 +99,14 @@ const EvidenceModal = (props) => {
           <div className="modal-header">
             <h5 className="modal-title" id="staticBackdropLabel">
               {" "}
-              {props.name ? "Edit evidence" : "Add evidence"}
+              {evidenceModalData.name ? "Edit evidence" : "Add evidence"}
             </h5>
             <button
               type="button"
               className="btn-close"
-              onClick={props.launchEvidenceModal}
+              onClick={() => {
+                dispatch(changeModalEvidenceOpen({ open: false }));
+              }}
               aria-label="Close"
             ></button>
           </div>
@@ -128,7 +145,7 @@ const EvidenceModal = (props) => {
               type="button"
               className="btn btn-secondary"
               onClick={() => {
-                props.launchEvidenceModal();
+                dispatch(changeModalEvidenceOpen({ open: false }));
               }}
             >
               Close
@@ -140,7 +157,7 @@ const EvidenceModal = (props) => {
                 launchAndSumbit();
               }}
             >
-              {props.name ? "Edit" : "Add"}
+              {evidenceModalData.name ? "Edit" : "Add"}
             </button>
           </div>
         </div>

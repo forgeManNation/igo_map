@@ -1,33 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Sidebar from "./sidebar/Sidebar";
 import Table from "./table/Table";
-import { useSelector } from "react-redux";
-import { selectUser, logIn, logOut } from "../userSlice";
-import { useDispatch } from "react-redux";
-import SettingsModal from "./table/modals/SettingsModal";
-import {
-  loadDataFromFirestoreDatabaseToRedux,
-  selectAllUserData,
-  selectAnalyses,
-  selectTableBodyData,
-  selectTableHeadData,
-  refreshReduxState,
-} from "./table/tableSlice";
-import { auth, onAuthStateChanged, setDoc, doc, db, getDoc } from "../firebase";
+import SettingsModal from "./table/modals/ProfileModal";
+import ChangeNameModal from "./table/modals/ChangeNameModal";
+import EvidenceModal from "./table/modals/EvidenceModal";
 
 const AuthenticatedApp = () => {
-  const dispatch = useDispatch();
-
-  const tableHeadData = useSelector(selectTableHeadData);
-  const tableBodyData = useSelector(selectTableBodyData);
-
-  const userData = useSelector(selectAllUserData);
-
   return (
     <div className="App d-flex flex-row">
       <Sidebar></Sidebar>
       <Table></Table>
+
+      {/* Modals */}
       <SettingsModal></SettingsModal>
+      <ChangeNameModal></ChangeNameModal>
+      <EvidenceModal></EvidenceModal>
       {/* <p>{JSON.stringify(useSelector(selectAllUserData))}</p> */}
     </div>
   );

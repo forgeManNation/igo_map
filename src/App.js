@@ -12,6 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
+import About from "./features/about/About";
 import AuthenticatedApp from "./features/AuthenticatedApp.js";
 import { logIn, logOut, selectUser } from "./userSlice";
 
@@ -22,10 +23,11 @@ function App() {
 
   const user = useSelector(selectUser);
 
+  //using useEffect to have only one event listener onAuthStateChanged
   useEffect(() => {
     onAuthStateChanged(auth, (logged_user) => {
       if (logged_user !== null) {
-        //if user exists than setting giving his data to redux store
+        //if user exists than giving his data to redux store
         const userToSaveTORedux = {
           displayName: logged_user.displayName,
           email: logged_user.email,
@@ -68,10 +70,6 @@ function App() {
   useEffect(() => {
     //checking whether data from firestore database are loaded in already to avoid saving wrong unloaded data
     if (autosavingIntoFireStore.current && user !== null) {
-      console.log(
-        userData.activeAnalysisIndex,
-        " -> is the active analysis index "
-      );
       const referenceToFirestore = doc(db, "users", user.uid);
       setDoc(referenceToFirestore, userData).then(() => {
         console.log("succesfully saved into database");
@@ -84,11 +82,12 @@ function App() {
       {user ? (
         <Routes>
           <Route path="/*" element={<AuthenticatedApp />}></Route>
+          <Route path="about" element={<About />} />
         </Routes>
       ) : (
         <Routes>
           <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
+          <Route path="about" element={<About />} />
           <Route path="/*" element={<Login />} />
         </Routes>
       )}

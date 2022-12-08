@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TableHead from "./tableHead/TableHead.js";
 import TableBody from "./tableBody/TableBody.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,13 +7,16 @@ import {
   addEvidence,
   deleteLastEvidence,
   deleteLastHypothesis,
+  selectAnalysisName,
 } from "./tableSlice";
+import { useReactToPrint } from "react-to-print";
 import { doc, getDoc, db } from "../../firebase";
 import HypothesisModal from "./modals/HypothesisModal.js";
-import EvidenceModal from "./modals/EvidenceModal.js";
 import "./table.scss";
+import { changeModalEvidenceOpen } from "./modals/modalSlice.js";
 
 const Table = () => {
+  const analysisName = useSelector(selectAnalysisName);
   const dispatch = useDispatch();
 
   const [modalHypothesisOpen, setmodalHypothesisOpen] = useState(false);
@@ -22,10 +25,8 @@ const Table = () => {
     setmodalHypothesisOpen(!modalHypothesisOpen);
   }
 
-  const [modalEvidenceOpen, setmodalEvidenceOpen] = useState(false);
-
   function launchEvidenceModal() {
-    setmodalEvidenceOpen(!modalEvidenceOpen);
+    dispatch(changeModalEvidenceOpen({ open: true }));
   }
 
   const [deleteLastRowButtonTooltipOpen, setdeleteLastRowButtonTooltipOpen] =
@@ -39,15 +40,35 @@ const Table = () => {
   const [addNewColumnButtonTooltipOpen, setaddNewColumnButtonTooltipOpen] =
     useState(false);
 
+  const printerIcon = <i class="bi bi-printer-fill table-alternating-icon"></i>;
+
+  const informationIcon = (
+    <i class="bi bi-info-circle-fill table-alternating-icon"></i>
+  );
+
   function deleteEvidence(tableRowindex) {
     if (window.confirm("do you really want to delete evidence?")) {
       dispatch(deleteLastEvidence(tableRowindex));
     }
   }
 
+  //printing table using extrnal library react-to-print by passing it table ref
+  const tableRef = useRef();
+
+  const printPageStyle = "textAlign: center!important";
+
+  const handlePrint = useReactToPrint({
+    pageStyle: printPageStyle,
+    content: () => tableRef.current,
+    copyStyles: true,
+  });
+
   return (
     <>
-      <div class="container">
+      <div class="container tableContainer" ref={tableRef}>
+        <div class="row">
+          <h2 className="analysisNameAboveTable">{analysisName}</h2>
+        </div>
         <div class="row">
           <div class="col-md-11">
             <table className="table">
@@ -55,7 +76,7 @@ const Table = () => {
               <TableBody></TableBody>
             </table>
           </div>
-          <div class="col-md-1 align-items-center d-flex flex-column justify-content-center">
+          <div class="nonprint col-md-1 align-items-center d-flex flex-column justify-content-center">
             {/* add new column */}
             <div
               role="button"
@@ -114,7 +135,7 @@ const Table = () => {
             </Tooltip>
           </div>
         </div>
-        <div className="row">
+        <div className="row nonprint">
           <div class="align-items-center d-flex justify-content-center ">
             {/* add new row */}
             <div
@@ -126,10 +147,6 @@ const Table = () => {
             >
               <i class="bi bi-plus-square-fill table-alternating-icon"></i>
             </div>
-            <EvidenceModal
-              launched={modalEvidenceOpen}
-              launchEvidenceModal={launchEvidenceModal}
-            ></EvidenceModal>
             <Tooltip
               delay={{ show: "300", hide: "0" }}
               placement="bottom"
@@ -168,6 +185,22 @@ const Table = () => {
           >
             Delete last evidence
           </Tooltip>
+        </div>
+
+        <div className="nonprint bottom-right-buttons">
+          <div
+            className="table-alternating-button "
+            role="button"
+            onClick={handlePrint}
+          >
+            {printerIcon}
+          </div>
+
+          <a target="_blank" href="./about">
+            <div className="table-alternating-button " role="button">
+              {informationIcon}
+            </div>
+          </a>
         </div>
       </div>
     </>
