@@ -29,6 +29,10 @@
   overflow: auto;
 }
 
+.nav-link.active {
+  background-color: main.$nav-link-color;
+}
+
 .analysesList {
   word-break: break-word;
   display: flex;
