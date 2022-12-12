@@ -36,6 +36,7 @@ const ProfileModal = () => {
         photoUrl: user.photoURL,
         uid: user.uid,
       };
+
       dispatch(logIn(userToSaveTORedux));
     });
   }

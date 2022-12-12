@@ -43,7 +43,7 @@ const Sidebar = () => {
           aria-expanded="false"
         >
           <img
-            src={user.userPic}
+            src={user.photoUrl}
             alt="user"
             class="rounded-circle me-2"
             width="32"
