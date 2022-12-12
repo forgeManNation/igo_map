@@ -3,6 +3,7 @@ import TableHead from "./tableHead/TableHead.js";
 import TableBody from "./tableBody/TableBody.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "reactstrap";
+import { changeModalHypothesisOpen } from "../modals/modalSlice";
 import {
   addEvidence,
   deleteLastEvidence,
@@ -11,9 +12,9 @@ import {
 } from "./tableSlice";
 import { useReactToPrint } from "react-to-print";
 import { doc, getDoc, db } from "../../firebase";
-import HypothesisModal from "./modals/HypothesisModal.js";
+import HypothesisModal from "../modals/HypothesisModal.js";
 import "./table.scss";
-import { changeModalEvidenceOpen } from "./modals/modalSlice.js";
+import { changeModalEvidenceOpen } from "../modals/modalSlice";
 
 const Table = () => {
   const analysisName = useSelector(selectAnalysisName);
@@ -85,14 +86,16 @@ const Table = () => {
               aria-label="add hypotesis"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              onClick={launchHypothesisModal}
+              onClick={() => {
+                dispatch(
+                  changeModalHypothesisOpen({
+                    open: true,
+                  })
+                );
+              }}
             >
               <i class="bi bi-plus-square-fill table-alternating-icon"></i>
             </div>
-            <HypothesisModal
-              launched={modalHypothesisOpen}
-              launchHypothesisModal={launchHypothesisModal}
-            ></HypothesisModal>
             <Tooltip
               delay={{ show: "300", hide: "0" }}
               placement="bottom"

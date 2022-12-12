@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { Modal } from "bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { changeModalProfileOpen, selectModalProfileOpen } from "./modalSlice";
-import { selectUser, logIn } from "../../../userSlice";
-import { auth, updateProfile, onAuthStateChanged } from "../../../firebase";
+import { selectUser, logIn } from "../../userSlice";
+import { auth, updateProfile, onAuthStateChanged } from "../../firebase";
 
 const ProfileModal = () => {
   const userData = useSelector(selectUser);

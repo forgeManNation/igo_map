@@ -9,6 +9,7 @@ const About = () => {
           <h1>About ACH</h1>
           <p>
             <a
+              rel="noreferrer"
               href="https://en.wikipedia.org/wiki/Analysis_of_competing_hypotheses"
               target="_blank"
             >

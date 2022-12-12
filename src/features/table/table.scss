@@ -9,6 +9,10 @@
   margin: 7vh !important;
 }
 
+.tableHeadCellContainer {
+  display: flex;
+  flex-direction: row;
+}
 .bottom-right-buttons {
   position: absolute;
   margin: 3vh !important;

@@ -9,7 +9,7 @@ import {
 } from "../tableSlice";
 // import EditEvidenceIconAndModal from "./EditEvidenceIconAndModal.js";
 import "./tableBody.scss";
-import { changeModalEvidenceOpen } from "../modals/modalSlice";
+import { changeModalEvidenceOpen } from "../../modals/modalSlice";
 const TableBody = () => {
   const tableBodyData = useSelector(selectTableBodyData);
 

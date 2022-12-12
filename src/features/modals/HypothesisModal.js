@@ -1,20 +1,20 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Modal } from "bootstrap";
-import { useDispatch } from "react-redux";
-import { addHypothesis, editHypothesis } from "../tableSlice";
-const HypothesisModal = (props) => {
-  const UIIndex = props.index + 1;
-
+import { useDispatch, useSelector } from "react-redux";
+import { addHypothesis, editHypothesis } from "../table/tableSlice";
+import { changeModalHypothesisOpen, selectModalHypothesis } from "./modalSlice";
+const HypothesisModal = () => {
+  const modalHypothesisData = useSelector(selectModalHypothesis);
   const dispatch = useDispatch();
 
   const [hypothesisName, sethypothesisName] = useState(
-    props.hypothesisName || ""
+    modalHypothesisData.name || ""
   );
   const [hypothesisAdditionalInformation, sethypothesisAdditionalInformation] =
-    useState(props.hypothesisAdditionalInformation || "");
+    useState(modalHypothesisData.additionalInformation || "");
 
   function submitHypothesis() {
-    if (props.hypothesisName === undefined) {
+    if (modalHypothesisData.index === undefined) {
       dispatch(
         addHypothesis({ hypothesisName, hypothesisAdditionalInformation })
       );
@@ -23,10 +23,11 @@ const HypothesisModal = (props) => {
         editHypothesis({
           name: hypothesisName,
           information: hypothesisAdditionalInformation,
-          index: props.index,
+          index: modalHypothesisData.index,
         })
       );
     }
+    dispatch(changeModalHypothesisOpen({ open: false }));
   }
 
   function changehypothesisAdditionalInformation(e) {
@@ -40,7 +41,16 @@ const HypothesisModal = (props) => {
   const modalRef = useRef();
 
   useEffect(() => {
-    if (props.launched) {
+    if (modalHypothesisData.open) {
+      sethypothesisName(
+        modalHypothesisData.name ? modalHypothesisData.name : ""
+      );
+      sethypothesisAdditionalInformation(
+        modalHypothesisData.additionalInformation
+          ? modalHypothesisData.additionalInformation
+          : ""
+      );
+
       const modalEle = modalRef.current;
       const bsModal = new Modal(modalEle, {
         backdrop: false,
@@ -54,7 +64,7 @@ const HypothesisModal = (props) => {
         bsModal.hide();
       }
     }
-  }, [props.launched]);
+  }, [modalHypothesisData.open]);
 
   return (
     <div className="modal fade modalBackground" ref={modalRef} tabIndex="-1">
@@ -63,18 +73,21 @@ const HypothesisModal = (props) => {
           <div className="modal-header">
             <h5 className="modal-title" id="staticBackdropLabel">
               {" "}
-              {props.hypothesisName ? "Edit hypothesis" : "Add hypothesis"}
+              {modalHypothesisData.name ? "Edit hypothesis" : "Add hypothesis"}
             </h5>
             <button
               type="button"
               className="btn-close"
-              onClick={props.launchHypothesisModal}
+              onClick={() => {
+                dispatch(changeModalHypothesisOpen({ open: false }));
+              }}
               aria-label="Close"
             ></button>
           </div>
           <div className="modal-body d-flex flex-column">
             <p>
-              Hypothesis {UIIndex} {props.name ? " - " + props.name : ""}
+              Hypothesis{" "}
+              {modalHypothesisData.name ? " - " + modalHypothesisData.name : ""}
             </p>
             <input
               onChange={changeHypothesisName}
@@ -92,7 +105,9 @@ const HypothesisModal = (props) => {
             <button
               type="button"
               className="btn btn-secondary"
-              onClick={props.launchHypothesisModal}
+              onClick={() => {
+                dispatch(changeModalHypothesisOpen({ open: false }));
+              }}
             >
               Close
             </button>
@@ -101,10 +116,9 @@ const HypothesisModal = (props) => {
               className="btn btn-primary"
               onClick={() => {
                 submitHypothesis();
-                props.launchHypothesisModal();
               }}
             >
-              {props.hypothesisName ? "Edit" : "Add"}
+              {modalHypothesisData.index ? "Edit" : "Add"}
             </button>
           </div>
         </div>

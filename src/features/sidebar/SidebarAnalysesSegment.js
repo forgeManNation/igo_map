@@ -5,7 +5,7 @@ import {
   selectAddNewAnalysisInputOpen,
   changeAddNewAnalysisInput,
 } from "../../userSlice";
-import { changeModalNameOpen } from "../table/modals/modalSlice";
+import { changeModalNameOpen } from "../modals/modalSlice";
 
 import {
   selectActiveAnalysisIndex,

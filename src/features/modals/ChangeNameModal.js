@@ -1,16 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Modal } from "bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  changeAnalysisName,
-  selectAnalysisName,
-  selectAnalyses,
-} from "../tableSlice";
-import {
-  selectModalNameOpen,
-  selectModalNameData,
-  changeModalNameOpen,
-} from "./modalSlice";
+import { changeAnalysisName, selectAnalyses } from "../table/tableSlice";
+import { selectModalNameData, changeModalNameOpen } from "./modalSlice";
 
 const ChangeNameModal = () => {
   const dispatch = useDispatch();
@@ -20,9 +12,11 @@ const ChangeNameModal = () => {
   const [newAnalysisName, setnewAnalysisName] = useState(modalNameData.name);
 
   function submitAnalysisNameChange() {
+    //if analysis with this name is already made by user
     const newAnalysisNameIsAlreadyUsed = analyses.some(
       (analysis) => analysis.analysisName === newAnalysisName
     );
+
     const limitOfCharactersInAnalysisName = 40;
 
     if (newAnalysisNameIsAlreadyUsed)
@@ -45,6 +39,7 @@ const ChangeNameModal = () => {
         })
       );
 
+      //after action is completed modal can be closed
       dispatch(changeModalNameOpen({ open: false }));
     }
   }

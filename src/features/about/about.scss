@@ -1,3 +1,5 @@
+@use "../../main.scss" as main;
+
 .aboutContainer {
   margin-top: 2vh;
   margin-bottom: 10vh;
@@ -12,18 +14,18 @@
   justify-content: center;
   flex-direction: column;
   p {
-    color: rgb(36, 46, 64);
+    color: main.$shade-color;
   }
 
   h1 {
     text-align: center;
-    color: rgb(36, 46, 64);
+    color: main.$shade-color;
   }
   height: 100%;
 }
 
 footer {
-  background-color: rgb(36, 46, 64);
+  background-color: main.$shade-color;
   color: aliceblue;
   height: 70px;
   display: flex;

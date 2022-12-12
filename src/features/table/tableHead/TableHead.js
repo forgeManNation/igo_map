@@ -3,11 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { selectTableHeadData, deleteSpecifiedHypothesis } from "../tableSlice";
 
-import EditHypothesisIconAndModal from "./EditHypothesisIconAndModal";
-
 import ProbabilityNumbersRow from "./ProbabilityNumbersRow";
 
 import InformationIconAndPopover from "./InformationIconAndPopover";
+import { changeModalHypothesisOpen } from "../../modals/modalSlice";
 
 const TableHead = () => {
   const dispatch = useDispatch();
@@ -22,6 +21,8 @@ const TableHead = () => {
     }
   }
 
+  const editIcon = <i class=" bi bi-pen-fill"></i>;
+
   return (
     <thead>
       <tr>
@@ -35,37 +36,57 @@ const TableHead = () => {
 
           return (
             <th key={tableHeadUpperRowCell + index}>
-              {/* number of hypothesis */}
-              {"H" + UIIndex}
-              &nbsp;
-              {/* name of hypothesis */}
-              {tableHeadUpperRowCell.name}
-              &nbsp;
-              {/* button to see additional information about hypothesis / appear only when any information exist */}
-              {tableHeadUpperRowCell.information ? (
-                <InformationIconAndPopover
-                  index={index}
-                ></InformationIconAndPopover>
-              ) : (
-                <></>
-              )}
-              &nbsp;
-              {/* button to edit information about hypothesis */}
-              <EditHypothesisIconAndModal
-                name={tableHeadUpperRowCell.name}
-                information={tableHeadUpperRowCell.information}
-                index={index}
-              ></EditHypothesisIconAndModal>
-              &nbsp;
-              {/* button to delete hypothesis */}
-              <span
-                role="button"
-                className="animate__animated animate__infinite  animate__pulse"
-                onClick={() => deleteHypothesis(index)}
-                id={"informationPopover" + index}
-              >
-                {deleteHypothesisIcon}
-              </span>
+              <div className="tableHeadCellContainer">
+                <div>
+                  {/* number of hypothesis */}
+                  {"H" + UIIndex}
+                  &nbsp;
+                  {/* name of hypothesis */}
+                  {tableHeadUpperRowCell.name}
+                  &nbsp;
+                  {/* button to see additional information about hypothesis / appear only when any information exist */}
+                  {tableHeadUpperRowCell.information ? (
+                    <InformationIconAndPopover
+                      index={index}
+                    ></InformationIconAndPopover>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+
+                <div>
+                  &nbsp;
+                  {/* button to edit information about hypothesis */}
+                  <span
+                    role="button"
+                    className="animate__animated animate__infinite  animate__pulse"
+                    onClick={() => {
+                      dispatch(
+                        changeModalHypothesisOpen({
+                          open: true,
+                          index: index,
+                          name: tableHeadUpperRowCell.name,
+                          additionalInformation:
+                            tableHeadUpperRowCell.information,
+                        })
+                      );
+                    }}
+                    id={"informationPopover" + index}
+                  >
+                    {editIcon}
+                  </span>
+                  &nbsp;
+                  {/* button to delete hypothesis */}
+                  <span
+                    role="button"
+                    className="animate__animated animate__infinite  animate__pulse"
+                    onClick={() => deleteHypothesis({ index: index })}
+                    id={"informationPopover" + index}
+                  >
+                    {deleteHypothesisIcon}
+                  </span>
+                </div>
+              </div>
             </th>
           );
         })}

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Modal } from "bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addEvidence, editEvidence } from "../tableSlice";
+import { addEvidence, editEvidence } from "../table/tableSlice";
 import { changeModalEvidenceOpen, selectModalEvidence } from "./modalSlice";
 
 const EvidenceModal = () => {
@@ -59,11 +59,22 @@ const EvidenceModal = () => {
   useEffect(() => {
     let evidenceModal = modalRef.current;
 
+    console.log(
+      "so now I have to set evidence with wrong data there is nota any oher way out from that",
+      evidenceModalData
+    );
+
     //when evidence modal is opened data are loaded into its states
-    setname(evidenceModalData.name);
-    setcredibility(evidenceModalData.credibility);
-    setrelevance(evidenceModalData.relevance);
-    settype(evidenceModalData.type);
+    setname(evidenceModalData.name ? evidenceModalData.name : name);
+    setcredibility(
+      evidenceModalData.credibility
+        ? evidenceModalData.credibility
+        : credibility
+    );
+    setrelevance(
+      evidenceModalData.relevance ? evidenceModalData.relevance : relevance
+    );
+    settype(evidenceModalData.type ? evidenceModalData.type : type);
 
     if (evidenceModalData.open) {
       const bsModal = new Modal(evidenceModal, {

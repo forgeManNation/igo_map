@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase";
 import SidebarAnalysesSegment from "./SidebarAnalysesSegment";
 import { changeAddNewAnalysisInput, selectUser } from "../../userSlice";
-import { changeModalProfileOpen } from "../table/modals/modalSlice";
+import { changeModalProfileOpen } from "../modals/modalSlice";
 
 const Sidebar = () => {
   function signOut() {

@@ -1,9 +1,10 @@
 import React from "react";
 import Sidebar from "./sidebar/Sidebar";
 import Table from "./table/Table";
-import SettingsModal from "./table/modals/ProfileModal";
-import ChangeNameModal from "./table/modals/ChangeNameModal";
-import EvidenceModal from "./table/modals/EvidenceModal";
+import SettingsModal from "./modals/ProfileModal";
+import ChangeNameModal from "./modals/ChangeNameModal";
+import EvidenceModal from "./modals/EvidenceModal";
+import HypothesisModal from "./modals/HypothesisModal";
 
 const AuthenticatedApp = () => {
   return (
@@ -15,6 +16,7 @@ const AuthenticatedApp = () => {
       <SettingsModal></SettingsModal>
       <ChangeNameModal></ChangeNameModal>
       <EvidenceModal></EvidenceModal>
+      <HypothesisModal></HypothesisModal>
       {/* <p>{JSON.stringify(useSelector(selectAllUserData))}</p> */}
     </div>
   );

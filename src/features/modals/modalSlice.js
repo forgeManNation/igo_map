@@ -3,6 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   modalHypothesis: {
     open: false,
+    name: "",
+    additionalInformation: "",
+    index: 0,
   },
   modalEvidence: {
     open: false,
@@ -21,7 +24,11 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     changeModalHypothesisOpen: (state, props) => {
-      state.modalHypothesisOpen = props.payload.open;
+      state.modalHypothesis.open = props.payload.open;
+      state.modalHypothesis.index = props.payload.index;
+      state.modalHypothesis.additionalInformation =
+        props.payload.additionalInformation;
+      state.modalHypothesis.name = props.payload.name;
     },
     changeModalEvidenceOpen: (state, props) => {
       state.modalEvidence.name = props.payload.name;
@@ -56,8 +63,7 @@ export const {
   changeModalNameOpen,
 } = modalSlice.actions;
 
-export const selectModalHypothesisOpen = (state) =>
-  state.modals.modalHypothesisOpen;
+export const selectModalHypothesis = (state) => state.modals.modalHypothesis;
 export const selectModalEvidence = (state) => state.modals.modalEvidence;
 export const selectModalProfileOpen = (state) => state.modals.modalProfileOpen;
 

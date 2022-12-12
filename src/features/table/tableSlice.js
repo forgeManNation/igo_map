@@ -147,6 +147,13 @@ export const tableSlice = createSlice({
       const tableBodyData =
         state.analyses[state.activeAnalysisIndex].tableBodyData;
 
+      console.log(
+        "so i need to remove this hypothesis with index",
+        props.payload.index,
+        "from ",
+        state.analyses
+      );
+
       tableBodyData.map((bodyRow) => {
         bodyRow.inputCells.splice(props.payload.index, 1);
         return bodyRow.inputCells;
