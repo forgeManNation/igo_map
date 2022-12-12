@@ -1,5 +1,3 @@
-import { stringLength } from "@firebase/util";
-import { User } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, signInWithEmailAndPassword } from "../../firebase";
@@ -12,30 +10,23 @@ const Login = () => {
   const [errorMessage, seterrorMessage] = useState("");
 
   //sign in to firebase than change the high order User object with retrieved data
-  //TODO: add functionality fow when the login fails
   function logInToAch() {
-    console.log("I happen?");
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("user is succesfully signed in");
-      })
-      .catch((err) => {
-        console.log("got an error boss");
-        //slicing the message to part which authErrors object has as key
-        let splicedFireAuthMessage = err.message.substring(
-          err.message.indexOf("/") + 1,
-          err.message.indexOf(")")
-        );
+    signInWithEmailAndPassword(auth, email, password).catch((err) => {
+      //slicing the message to part which authErrors object has as key
+      let splicedFireAuthMessage = err.message.substring(
+        err.message.indexOf("/") + 1,
+        err.message.indexOf(")")
+      );
 
-        //getting error rewritten for user
-        let userMessage = authErrors[splicedFireAuthMessage];
+      //getting error rewritten in more readable way for user
+      let userMessage = authErrors[splicedFireAuthMessage];
 
-        seterrorMessage(userMessage);
-      });
+      seterrorMessage(userMessage);
+    });
   }
 
   return (
-    <div className="w-full  d-flex justify-content-center align-content-center flex-wrap authBg">
+    <div className="w-full d-flex justify-content-center align-content-center flex-wrap authBg">
       <div className="mainAuthContainer bg-light p-5 pt-4 pb-1">
         <h3 className="pb-2 pr-4 ">
           Sign in to <br />
@@ -87,10 +78,9 @@ const Login = () => {
             </span>{" "}
           </p>
         </div>
-        {/* <p className='errorMessage'>{errorMessage}</p> */}
         <button
           onClick={logInToAch}
-          className="authActionButton btn  btn-outline-dark"
+          className="authActionButton btn btn-outline-dark"
         >
           Sign in
         </button>

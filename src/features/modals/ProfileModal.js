@@ -17,7 +17,7 @@ const ProfileModal = () => {
 
   const [user, setuser] = useState(null);
 
-  //there is a problem with saving all users data into redux store because there are funcios as properties
+  //there is a problem with saving all users data into redux store because there are functions as properties
   //so user is grabbed with no onAuthStateChanged handle
   useEffect(() => {
     onAuthStateChanged(auth, (logged_user) => {

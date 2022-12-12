@@ -1,10 +1,15 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   activeAnalysisIndex: 0,
   analyses: [
     {
-      analysisName: "My first analysis",
+      analysisName: "Kdo zavraždil J. F. Kenedyho?",
+      tableHeadData: [],
+      tableBodyData: [],
+    },
+    {
+      analysisName: "Je ve fotbale lepší silná obrana nebo útok?",
       tableHeadData: [],
       tableBodyData: [],
     },
@@ -31,13 +36,6 @@ export const tableSlice = createSlice({
       const analysisNewName = props.payload.analysisNewName;
 
       state.analyses[newIndex].analysisName = analysisNewName;
-
-      console.log(
-        "what is the new index, ",
-        newIndex,
-        " what is the new name: ",
-        analysisNewName
-      );
     },
     createNewAnalysis: (state, props) => {
       state.analyses.push({
@@ -146,13 +144,6 @@ export const tableSlice = createSlice({
         state.analyses[state.activeAnalysisIndex].tableHeadData;
       const tableBodyData =
         state.analyses[state.activeAnalysisIndex].tableBodyData;
-
-      console.log(
-        "so i need to remove this hypothesis with index",
-        props.payload.index,
-        "from ",
-        state.analyses
-      );
 
       tableBodyData.map((bodyRow) => {
         bodyRow.inputCells.splice(props.payload.index, 1);

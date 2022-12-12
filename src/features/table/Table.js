@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import TableHead from "./tableHead/TableHead.js";
 import TableBody from "./tableBody/TableBody.js";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "reactstrap";
 import { changeModalHypothesisOpen } from "../modals/modalSlice";
 import {
-  addEvidence,
   deleteLastEvidence,
   deleteLastHypothesis,
   selectAnalysisName,
 } from "./tableSlice";
 import { useReactToPrint } from "react-to-print";
-import { doc, getDoc, db } from "../../firebase";
-import HypothesisModal from "../modals/HypothesisModal.js";
 import "./table.scss";
 import { changeModalEvidenceOpen } from "../modals/modalSlice";
 
@@ -20,10 +17,12 @@ const Table = () => {
   const analysisName = useSelector(selectAnalysisName);
   const dispatch = useDispatch();
 
-  const [modalHypothesisOpen, setmodalHypothesisOpen] = useState(false);
-
   function launchHypothesisModal() {
-    setmodalHypothesisOpen(!modalHypothesisOpen);
+    dispatch(
+      changeModalHypothesisOpen({
+        open: true,
+      })
+    );
   }
 
   function launchEvidenceModal() {
@@ -86,13 +85,7 @@ const Table = () => {
               aria-label="add hypotesis"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              onClick={() => {
-                dispatch(
-                  changeModalHypothesisOpen({
-                    open: true,
-                  })
-                );
-              }}
+              onClick={launchHypothesisModal}
             >
               <i class="bi bi-plus-square-fill table-alternating-icon"></i>
             </div>
@@ -111,7 +104,7 @@ const Table = () => {
             </Tooltip>
 
             {/* delete last column*/}
-            {/* //delete last hypotesis  */}
+            {/* -/delete last hypotesis  */}
             <div
               role="button"
               id="deleteLastHypothesisButton"

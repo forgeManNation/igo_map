@@ -3,10 +3,6 @@ import {
   createUserWithEmailAndPassword,
   auth,
   updateProfile,
-  signInWithEmailAndPassword,
-  db,
-  doc,
-  setDoc,
   signInAnonymously,
 } from "../../firebase";
 import { useNavigate } from "react-router-dom";

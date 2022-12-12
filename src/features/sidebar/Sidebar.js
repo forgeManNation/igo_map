@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./sidebar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../firebase";
@@ -23,15 +23,12 @@ const Sidebar = () => {
   }
 
   return (
-    <div
-      class="sidebar main d-flex flex-column flex-shrink-0 p-3 text-dark "
-      style={{ width: "280px", height: "100%" }}
-    >
+    <div class="sidebar main d-flex flex-column flex-shrink-0 p-3 text-dark ">
       <a
         href="/"
         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
       >
-        <span class="fs-4">Overview of your hypothesis</span>
+        <span class="fs-4">Overview of your analyses</span>
       </a>
       <hr />
       <SidebarAnalysesSegment></SidebarAnalysesSegment>
@@ -59,12 +56,12 @@ const Sidebar = () => {
           aria-labelledby="dropdownUser1"
         >
           <li>
-            <a class="dropdown-item" onClick={addNewProject} href="#">
+            <a class="dropdown-item" onClick={addNewProject}>
               New project...
             </a>
           </li>
           <li>
-            <a class="dropdown-item" onClick={openChangeProfileModal} href="#">
+            <a class="dropdown-item" onClick={openChangeProfileModal}>
               Profile
             </a>
           </li>
@@ -72,7 +69,7 @@ const Sidebar = () => {
             <hr class="dropdown-divider" />
           </li>
           <li>
-            <a class="dropdown-item" onClick={signOut} href="#">
+            <a class="dropdown-item" onClick={signOut}>
               Sign out
             </a>
           </li>

@@ -17,7 +17,6 @@ const AuthenticatedApp = () => {
       <ChangeNameModal></ChangeNameModal>
       <EvidenceModal></EvidenceModal>
       <HypothesisModal></HypothesisModal>
-      {/* <p>{JSON.stringify(useSelector(selectAllUserData))}</p> */}
     </div>
   );
 };

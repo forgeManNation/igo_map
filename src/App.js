@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "./app.scss";
 import { doc, getDoc, setDoc, db } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import {
   refreshReduxState,
   selectAllUserData,
 } from "./features/table/tableSlice";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import Login from "./features/authentication/Login";
@@ -51,7 +51,7 @@ function App() {
               )
             );
           }
-          //after user data are loaded programm can start autosaving
+          //after user data are loaded program can start autosaving
           autosavingIntoFireStore.current = true;
         });
       }
@@ -71,9 +71,8 @@ function App() {
     //checking whether data from firestore database are loaded in already to avoid saving wrong unloaded data
     if (autosavingIntoFireStore.current && user !== null) {
       const referenceToFirestore = doc(db, "users", user.uid);
-      setDoc(referenceToFirestore, userData).then(() => {
-        console.log("succesfully saved into database");
-      });
+      //saving into database
+      setDoc(referenceToFirestore, userData);
     }
   }, [userData]);
 

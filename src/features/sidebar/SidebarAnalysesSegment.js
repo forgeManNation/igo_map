@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { auth } from "../../firebase";
 import {
   selectAddNewAnalysisInputOpen,
   changeAddNewAnalysisInput,
@@ -11,7 +10,6 @@ import {
   selectActiveAnalysisIndex,
   changeActiveAnalysisIndex,
   selectAnalyses,
-  selectAllUserData,
   removeLastAnalysis,
   createNewAnalysis,
   deleteAnalysis,
@@ -27,7 +25,7 @@ const SidebarAnalysesSegment = () => {
   //continue on getting data from redux
   const addNewAnalysisInputOpen = useSelector(selectAddNewAnalysisInputOpen);
   const addAnalysisIcon = (
-    <i class="bi  bi-plus-circle-fill sidebarIcon" role="button"></i>
+    <i class="bi bi-plus-circle-fill sidebarIcon" role="button"></i>
   );
   const removeAnalysisIcon = (
     <i class="bi bi-dash-circle-fill sidebarIcon" role="button"></i>
@@ -61,7 +59,6 @@ const SidebarAnalysesSegment = () => {
       dispatch(createNewAnalysis({ analysisName: newAnalysisInputValue }));
 
       //than the open input can be closed
-      // setaddNewAnalysisInputOpen(false);
       dispatch(changeAddNewAnalysisInput({ newInputState: false }));
 
       setnewAnalysisInputValue("");
@@ -93,12 +90,6 @@ const SidebarAnalysesSegment = () => {
     //stops parents onClick from firing
     e.stopPropagation();
 
-    console.log(
-      "so now I am calling this one, this is hte index",
-      index,
-      "this is the old name",
-      name
-    );
     dispatch(changeModalNameOpen({ open: true, index: index, name: name }));
   }
 

@@ -1,23 +1,26 @@
 @use "../../../main" as main;
 
-.compatibilityButton{
-    margin: 0.3vh;
-    padding: 0.7vh;
-    border-radius: 0.6vh;
-    color: main.$bg-color;
-    background-color: rgba(main.$base-color, 0.8);
-    border: 1px solid rgb(194, 180, 180);
-
+.compatibilityButton {
+  margin: 0.3vh;
+  padding: 0.7vh;
+  border-radius: 0.6vh;
+  color: main.$bg-color;
+  background-color: rgba(main.$base-color, 0.8);
+  border: 1px solid rgb(194, 180, 180);
 }
 
-.compatible{
-    background-color: rgba(main.$base-color, 0.85);
+.compatible {
+  background-color: rgba(main.$base-color, 0.85);
 }
-.neutral{
-    background: linear-gradient(22.5deg, rgba(main.$base-color, 0.85) 50%, rgba(main.$base-color, 0.6) 50%)!important;
+.neutral {
+  background: linear-gradient(
+    22.5deg,
+    rgba(main.$base-color, 0.85) 50%,
+    rgba(main.$base-color, 0.6) 50%
+  ) !important;
 }
-.incompatible{
-    padding-left: 1.2vh;
-    padding-right: 1.2vh;
-    background-color: rgba(main.$base-color, 0.6);
+.incompatible {
+  padding-left: 1.2vh;
+  padding-right: 1.2vh;
+  background-color: rgba(main.$base-color, 0.6);
 }

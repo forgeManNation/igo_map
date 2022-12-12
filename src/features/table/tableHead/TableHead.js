@@ -44,47 +44,46 @@ const TableHead = () => {
                   {/* name of hypothesis */}
                   {tableHeadUpperRowCell.name}
                   &nbsp;
-                  {/* button to see additional information about hypothesis / appear only when any information exist */}
-                  {tableHeadUpperRowCell.information ? (
-                    <InformationIconAndPopover
-                      index={index}
-                    ></InformationIconAndPopover>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-
-                <div>
-                  &nbsp;
-                  {/* button to edit information about hypothesis */}
-                  <span
-                    role="button"
-                    className="animate__animated animate__infinite  animate__pulse"
-                    onClick={() => {
-                      dispatch(
-                        changeModalHypothesisOpen({
-                          open: true,
-                          index: index,
-                          name: tableHeadUpperRowCell.name,
-                          additionalInformation:
-                            tableHeadUpperRowCell.information,
-                        })
-                      );
-                    }}
-                    id={"informationPopover" + index}
-                  >
-                    {editIcon}
-                  </span>
-                  &nbsp;
-                  {/* button to delete hypothesis */}
-                  <span
-                    role="button"
-                    className="animate__animated animate__infinite  animate__pulse"
-                    onClick={() => deleteHypothesis({ index: index })}
-                    id={"informationPopover" + index}
-                  >
-                    {deleteHypothesisIcon}
-                  </span>
+                  <div>
+                    {/* button to see additional information about hypothesis / appear only when any information exist */}
+                    {tableHeadUpperRowCell.information ? (
+                      <InformationIconAndPopover
+                        index={index}
+                      ></InformationIconAndPopover>
+                    ) : (
+                      <></>
+                    )}
+                    &nbsp;
+                    {/* button to edit information about hypothesis */}
+                    <span
+                      role="button"
+                      className="animate__animated animate__infinite  animate__pulse"
+                      onClick={() => {
+                        dispatch(
+                          changeModalHypothesisOpen({
+                            open: true,
+                            index: index,
+                            name: tableHeadUpperRowCell.name,
+                            additionalInformation:
+                              tableHeadUpperRowCell.information,
+                          })
+                        );
+                      }}
+                      id={"informationPopover" + index}
+                    >
+                      {editIcon}
+                    </span>
+                    &nbsp;
+                    {/* button to delete hypothesis */}
+                    <span
+                      role="button"
+                      className="animate__animated animate__infinite  animate__pulse"
+                      onClick={() => deleteHypothesis({ index: index })}
+                      id={"informationPopover" + index}
+                    >
+                      {deleteHypothesisIcon}
+                    </span>
+                  </div>
                 </div>
               </div>
             </th>

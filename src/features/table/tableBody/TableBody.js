@@ -5,7 +5,6 @@ import {
   selectTableBodyData,
   changeCompatibility,
   deleteSpecifiedEvidence,
-  deleteLastEvidence,
 } from "../tableSlice";
 // import EditEvidenceIconAndModal from "./EditEvidenceIconAndModal.js";
 import "./tableBody.scss";
@@ -14,10 +13,6 @@ const TableBody = () => {
   const tableBodyData = useSelector(selectTableBodyData);
 
   const dispatch = useDispatch();
-
-  const [visibility, setvisibility] = useState(
-    Array(tableBodyData.length).fill({ display: "none" })
-  );
 
   function deleteEvidence(tableRowindex) {
     if (window.confirm("do you really want to delete evidence?")) {

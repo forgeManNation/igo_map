@@ -3,6 +3,8 @@ import { Modal } from "bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addHypothesis, editHypothesis } from "../table/tableSlice";
 import { changeModalHypothesisOpen, selectModalHypothesis } from "./modalSlice";
+
+//modal for editing or adding new hypothesis
 const HypothesisModal = () => {
   const modalHypothesisData = useSelector(selectModalHypothesis);
   const dispatch = useDispatch();
@@ -14,6 +16,7 @@ const HypothesisModal = () => {
     useState(modalHypothesisData.additionalInformation || "");
 
   function submitHypothesis() {
+    //if there is no index present in redux then new hypothesis is added
     if (modalHypothesisData.index === undefined) {
       dispatch(
         addHypothesis({ hypothesisName, hypothesisAdditionalInformation })
@@ -27,6 +30,8 @@ const HypothesisModal = () => {
         })
       );
     }
+
+    //closing the modal
     dispatch(changeModalHypothesisOpen({ open: false }));
   }
 
@@ -41,6 +46,7 @@ const HypothesisModal = () => {
   const modalRef = useRef();
 
   useEffect(() => {
+    // data are loaded into states from redux
     if (modalHypothesisData.open) {
       sethypothesisName(
         modalHypothesisData.name ? modalHypothesisData.name : ""
@@ -51,6 +57,7 @@ const HypothesisModal = () => {
           : ""
       );
 
+      //modal is shown or hidden
       const modalEle = modalRef.current;
       const bsModal = new Modal(modalEle, {
         backdrop: false,
@@ -114,9 +121,7 @@ const HypothesisModal = () => {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => {
-                submitHypothesis();
-              }}
+              onClick={submitHypothesis}
             >
               {modalHypothesisData.index ? "Edit" : "Add"}
             </button>

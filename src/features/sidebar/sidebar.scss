@@ -10,8 +10,6 @@
 }
 
 .active {
-  //main.$base-color
-  background-color: rgb(99, 87, 229) !important;
   background-color: main.$base-color;
 }
 
@@ -39,6 +37,8 @@
 }
 
 .sidebar {
+  width: 280px;
+  height: 100%;
   input {
     margin: 0vh !important;
   }

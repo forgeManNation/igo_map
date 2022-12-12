@@ -56,13 +56,10 @@ const EvidenceModal = () => {
 
   const modalRef = useRef();
 
+  //when modal is opened data are first updated with data from redux
+  //then Modal is shown or hidden relying on redux open atribute
   useEffect(() => {
     let evidenceModal = modalRef.current;
-
-    console.log(
-      "so now I have to set evidence with wrong data there is nota any oher way out from that",
-      evidenceModalData
-    );
 
     //when evidence modal is opened data are loaded into its states
     setname(evidenceModalData.name ? evidenceModalData.name : name);
@@ -91,11 +88,10 @@ const EvidenceModal = () => {
     }
   }, [evidenceModalData.open]);
 
-  async function launchAndSumbit() {
+  //close and submit modal
+  function closeAndSumbit() {
     dispatch(changeModalEvidenceOpen({ open: false }));
-
     submitEvidence();
-    console.log("before this happens 5 seonds shall pass");
   }
 
   return (
@@ -165,7 +161,7 @@ const EvidenceModal = () => {
               type="button"
               className="btn btn-primary"
               onClick={() => {
-                launchAndSumbit();
+                closeAndSumbit();
               }}
             >
               {evidenceModalData.name ? "Edit" : "Add"}

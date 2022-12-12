@@ -2,12 +2,13 @@ import React, { useRef, useEffect, useState } from "react";
 import { Modal } from "bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { changeAnalysisName, selectAnalyses } from "../table/tableSlice";
-import { selectModalNameData, changeModalNameOpen } from "./modalSlice";
+import { selectModalName, changeModalNameOpen } from "./modalSlice";
 
+//modal to change analysis name
 const ChangeNameModal = () => {
   const dispatch = useDispatch();
   const analyses = useSelector(selectAnalyses);
-  const modalNameData = useSelector(selectModalNameData);
+  const modalNameData = useSelector(selectModalName);
 
   const [newAnalysisName, setnewAnalysisName] = useState(modalNameData.name);
 

@@ -31,13 +31,14 @@ export const modalSlice = createSlice({
       state.modalHypothesis.name = props.payload.name;
     },
     changeModalEvidenceOpen: (state, props) => {
+      //every time modal loads, it loads with data of index, name, credibility, type, relevance, index, after
+      //apply button in modal is clicked data are saved into the tableSlice and
+      //when modal is closed, data saved in modalSlice are basically refreshed to undefined
       state.modalEvidence.name = props.payload.name;
       state.modalEvidence.credibility = props.payload.credibility;
       state.modalEvidence.type = props.payload.type;
       state.modalEvidence.relevance = props.payload.relevance;
       state.modalEvidence.index = props.payload.index;
-
-      console.log(props.payload, "LOGUJU PROPS PAYLOAD ANOOO?");
 
       state.modalEvidence.open = props.payload.open;
     },
@@ -67,6 +68,6 @@ export const selectModalHypothesis = (state) => state.modals.modalHypothesis;
 export const selectModalEvidence = (state) => state.modals.modalEvidence;
 export const selectModalProfileOpen = (state) => state.modals.modalProfileOpen;
 
-export const selectModalNameData = (state) => state.modals.modalName;
+export const selectModalName = (state) => state.modals.modalName;
 
 export default modalSlice.reducer;

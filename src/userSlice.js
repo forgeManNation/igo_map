@@ -1,8 +1,7 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
-  usersColorTheme: "blue",
   addNewAnalysisInputOpen: false,
 };
 
