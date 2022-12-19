@@ -30,7 +30,7 @@ const Map = ({ currentOrganization }: mapProps) => {
   const [themes, setthemes] = useState([
     {
       name: "railway theme",
-      url: "https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png",
+      url: "https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=3f19809ebd064b10a80b4ea7d2035c35",
       selected: false,
       memberCountriesColor: "red",
       memberCountriesWithStatusColor: "purple",
