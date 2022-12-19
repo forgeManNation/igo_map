@@ -30,14 +30,14 @@ const Map = ({ currentOrganization }: mapProps) => {
   const [themes, setthemes] = useState([
     {
       name: "railway theme",
-      url: "https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=3f19809ebd064b10a80b4ea7d2035c35",
+      url: "https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png",
       selected: false,
       memberCountriesColor: "red",
       memberCountriesWithStatusColor: "purple",
     },
     {
       name: "dark blue theme",
-      url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=0ceb336f-cb0c-490a-a13d-2db0b9208614",
+      url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
       selected: true,
       memberCountriesColor: "rgb(30 58 138)",
       memberCountriesWithStatusColor: "rgb(30 58 138)",
