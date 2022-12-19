@@ -37,15 +37,8 @@ const Map = ({ currentOrganization }: mapProps) => {
     },
     {
       name: "dark blue theme",
-      url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
+      url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=0ceb336f-cb0c-490a-a13d-2db0b9208614",
       selected: true,
-      memberCountriesColor: "rgb(30 58 138)",
-      memberCountriesWithStatusColor: "rgb(30 58 138)",
-    },
-    {
-      name: "dark blue theme",
-      url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
-      selected: false,
       memberCountriesColor: "rgb(30 58 138)",
       memberCountriesWithStatusColor: "rgb(30 58 138)",
     },
