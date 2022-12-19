@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import CompatibilityInput from "./CompatibilityInput";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -6,7 +6,6 @@ import {
   changeCompatibility,
   deleteSpecifiedEvidence,
 } from "../tableSlice";
-// import EditEvidenceIconAndModal from "./EditEvidenceIconAndModal.js";
 import "./tableBody.scss";
 import { changeModalEvidenceOpen } from "../../modals/modalSlice";
 const TableBody = () => {
@@ -33,7 +32,7 @@ const TableBody = () => {
             <span className="d-flex flex-row justify-content-center">
               <span className="iconsWrapper">
                 <span
-                  className="editEvidenceIcon animate__animated animate__infinite  animate__pulse"
+                  className="editEvidenceIcon"
                   role="button"
                   onClick={() => {
                     dispatch(
@@ -53,7 +52,7 @@ const TableBody = () => {
                 &nbsp;
                 <span
                   role="button"
-                  className="editEvidenceIcon animate__animated animate__infinite  animate__pulse"
+                  className="editEvidenceIcon"
                   onClick={() => {
                     deleteEvidence(tableRowindex);
                   }}

@@ -1,7 +1,12 @@
 @use "../../main.scss" as main;
 
+.tableSegment {
+  overflow: auto;
+}
 .tableContainer {
-  margin: 7vh !important;
+  margin: 50px;
+  // width: 100%;
+  // overflow: scroll;
 }
 
 .tableHeadCellContainer {
@@ -9,7 +14,7 @@
   flex-direction: row;
 }
 .bottom-right-buttons {
-  position: absolute;
+  position: fixed;
   margin: 3vh !important;
   bottom: 0vh;
   right: 2vh;
@@ -23,6 +28,9 @@
 }
 
 table {
+  table-layout: fixed;
+  white-space: normal;
+  width: 100%;
   text-align: center;
   background-color: main.$bg-color;
 }

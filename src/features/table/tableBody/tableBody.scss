@@ -1,8 +1,7 @@
 @use "../../../main.scss" as main;
 
 .nameCell {
-  width: 120%;
-  margin-left: 10%;
+  margin-left: 30%;
   position: relative;
 }
 
@@ -16,6 +15,8 @@ tr {
     background: rgba($color: #f3f0f0, $alpha: 0);
     position: absolute;
     left: 3vh;
+    display: flex;
+    place-self: center;
 
     .editEvidenceIcon {
       visibility: hidden;

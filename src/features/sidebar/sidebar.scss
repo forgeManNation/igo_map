@@ -18,7 +18,25 @@
 }
 
 .nav-item:hover {
+  .active {
+    .changeAnalysisIcons {
+      background-color: main.$nav-link-color;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out;
+
+      i {
+        color: main.$contrast-dark-blue-color;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out;
+      }
+    }
+  }
   .changeAnalysisIcons {
+    position: absolute;
+    left: 30px;
+    background-color: main.$bg-color;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out;
     display: inline-block;
   }
 }

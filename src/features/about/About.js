@@ -46,7 +46,14 @@ const About = () => {
         </div>
       </div>
       <footer>
-        Created by&nbsp;<a href="">Radek Starý</a>
+        Created by&nbsp;
+        <a
+          href="https://radekstaryportfolio.web.app"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Radek Starý
+        </a>
       </footer>
     </>
   );

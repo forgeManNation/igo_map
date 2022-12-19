@@ -46,9 +46,15 @@ const Table = () => {
     <i class="bi bi-info-circle-fill table-alternating-icon"></i>
   );
 
-  function deleteEvidence(tableRowindex) {
-    if (window.confirm("do you really want to delete evidence?")) {
-      dispatch(deleteLastEvidence(tableRowindex));
+  function deleteEvidence() {
+    if (window.confirm("Do you really want to delete evidence?")) {
+      dispatch(deleteLastEvidence());
+    }
+  }
+
+  function deleteHypothesis() {
+    if (window.confirm("Do you really want to delete last hypothesis?")) {
+      dispatch(deleteLastHypothesis());
     }
   }
 
@@ -65,18 +71,20 @@ const Table = () => {
 
   return (
     <>
-      <div class="container tableContainer" ref={tableRef}>
-        <div class="row">
+      <div
+        class="d-flex flex-column justify-content-center tableSegment"
+        ref={tableRef}
+      >
+        <div>
           <h2 className="analysisNameAboveTable">{analysisName}</h2>
         </div>
-        <div class="row">
-          <div class="col-md-11">
-            <table className="table">
-              <TableHead></TableHead>
-              <TableBody></TableBody>
-            </table>
-          </div>
-          <div class="nonprint col-md-1 align-items-center d-flex flex-column justify-content-center">
+        <div class="tableContainer d-flex flex-direction-row justify-content-center ">
+          <table className="table">
+            <TableHead></TableHead>
+            <TableBody></TableBody>
+          </table>
+
+          <div class="nonprint align-items-center d-flex flex-column justify-content-center m-4">
             {/* add new column */}
             <div
               role="button"
@@ -110,9 +118,7 @@ const Table = () => {
               id="deleteLastHypothesisButton"
               class="table-alternating-button"
               aria-label="delete last hypotesis"
-              onClick={() => {
-                dispatch(deleteLastHypothesis());
-              }}
+              onClick={deleteHypothesis}
             >
               <i class="bi bi-dash-square-fill table-alternating-icon"></i>
             </div>
@@ -131,7 +137,7 @@ const Table = () => {
             </Tooltip>
           </div>
         </div>
-        <div className="row nonprint">
+        <div className="nonprint">
           <div class="align-items-center d-flex justify-content-center ">
             {/* add new row */}
             <div
@@ -161,9 +167,7 @@ const Table = () => {
               id="deleteLastRowButton"
               class="table-alternating-button"
               aria-label="delete last evidence"
-              onClick={() => {
-                deleteEvidence();
-              }}
+              onClick={deleteEvidence}
             >
               <i class="bi bi-dash-square-fill table-alternating-icon"></i>
             </div>

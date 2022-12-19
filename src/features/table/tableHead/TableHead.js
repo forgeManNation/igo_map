@@ -36,7 +36,7 @@ const TableHead = () => {
 
           return (
             <th key={tableHeadUpperRowCell + index}>
-              <div className="tableHeadCellContainer">
+              <div className="tableHeadCellContainer d-flex flex-row justify-content-center align-items-center">
                 <div>
                   {/* number of hypothesis */}
                   {"H" + UIIndex}
@@ -44,7 +44,7 @@ const TableHead = () => {
                   {/* name of hypothesis */}
                   {tableHeadUpperRowCell.name}
                   &nbsp;
-                  <div className="d-flex flex-row">
+                  <div className="d-flex flex-row justify-content-center">
                     {/* button to see additional information about hypothesis / appear only when any information exist */}
                     {tableHeadUpperRowCell.information ? (
                       <InformationIconAndPopover
@@ -57,7 +57,6 @@ const TableHead = () => {
                     {/* button to edit information about hypothesis */}
                     <span
                       role="button"
-                      className="animate__animated  animate__pulse"
                       onClick={() => {
                         dispatch(
                           changeModalHypothesisOpen({
