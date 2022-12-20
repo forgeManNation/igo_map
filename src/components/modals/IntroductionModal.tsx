@@ -82,7 +82,7 @@ const IntroductionModal = (props: introductionModalProps) => {
                           <hr className="my-4" />
                           <span className="text-gray-500">
                             created by{" "}
-                            <a className="underline" href="myPortfolio.com">
+                            <a className="underline" target='_blank' href="https://radekstaryportfolio.web.app">
                               Radek Starý
                             </a>
                           </span>
