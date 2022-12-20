@@ -70,7 +70,7 @@ const IntroductionModal = (props: introductionModalProps) => {
                           <hr className="my-4" />
                           the data were scraped from{" "}
                           <a
-                            href="#www.ciaworldfactbook.com"
+                            href="https://www.cia.gov/the-world-factbook/"
                             target="_blank"
                             className=" font-semibold text-slate-700"
                           >
